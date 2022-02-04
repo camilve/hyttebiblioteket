@@ -1,0 +1,8 @@
+{
+  "name": "Hyttebiblioteket",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react",
+  "id": "a8280a5e"
+}
