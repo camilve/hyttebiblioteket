@@ -28,7 +28,7 @@ const Tab3: React.FC = () => {
 
   useEffect(() => {
     fetchUser();
-  }, [user, fetchUser]);
+  });
 
   console.log(user);
   return (
