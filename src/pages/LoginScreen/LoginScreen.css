@@ -11,6 +11,7 @@ ion-item.item-has-focus > ion-label {
   border: 1px solid #999;
   border-radius: 0.5rem;
   margin-bottom: 1rem;
+  --inner-border-width: 0;
 }
 .item.item-input.item-has-focus {
   --background: transparent !important;
@@ -47,6 +48,18 @@ ion-item.item-has-focus > ion-label {
   margin: 3rem 0;
 }
 
-#headerTitle {
-  opacity: 1;
+.logo {
+  color: white;
+  height: 5.5rem;
+  width: 4.125rem;
+  float: left;
+}
+
+.logoContainer {
+  display: flex;
+}
+
+.caption {
+  font-size: 0.75rem;
+  margin: 0;
 }

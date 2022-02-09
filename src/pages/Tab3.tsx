@@ -1,77 +1,56 @@
+import React, { useState, useEffect } from "react";
+import * as userDB from "../db/repositories/users";
 import {
   IonContent,
   IonHeader,
   IonPage,
   IonTitle,
   IonToolbar,
-  IonCard,
-  IonItem,
-  IonInput,
-  IonLabel,
+  IonSkeletonText,
   IonButton,
+  IonButtons,
+  IonBackButton,
 } from "@ionic/react";
-import ExploreContainer from "../components/ExploreContainer";
-import { auth } from "../db/index";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { UserType } from "../types/generalTypes";
 import "./Tab3.css";
 import HowTo from "../components/how-to";
+import { logout, auth } from "../db/index";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const Tab3: React.FC = () => {
-  const [user, loading] = useAuthState(auth);
+  const [user] = useAuthState(auth);
+  const [userInfo, setUserInfo] = useState<UserType | undefined>(undefined);
 
+  useEffect(() => {
+    fetchUser();
+  }, [user]);
+
+  const fetchUser = async () => {
+    if (user && !userInfo) {
+      const _user = await userDB.byId(user.uid);
+      setUserInfo(_user);
+    }
+  };
+
+  console.log(user);
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader collapse="fade">
         <IonToolbar>
-          <IonTitle>Hyttebiblioteket</IonTitle>
+          {/* <IonButtons slot="start">
+            <IonBackButton defaultHref="/" />
+          </IonButtons> */}
+          <IonTitle id="headerTitle">Hjem</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Tab 3</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <div className="container">
-          <IonCard className="card">
-            <IonButton color="secondary" fill="solid">
-              Registrer
-            </IonButton>
-            <p className="orLoginText">Eller logg inn</p>
-            <IonItem>
-              <IonLabel position="floating" className="label">
-                E-post
-              </IonLabel>
-              <IonInput
-                value=""
-                onIonChange={(e) => console.log("test")}
-                required
-                type="email"
-              ></IonInput>
-            </IonItem>
-            <IonItem>
-              <IonLabel position="floating" className="label">
-                Passord
-              </IonLabel>
-              <IonInput
-                value=""
-                onIonChange={(e) => console.log("test")}
-                required
-                type="password"
-              ></IonInput>
-            </IonItem>
-            <IonButton
-              expand="block"
-              color="primary"
-              fill="solid"
-              type="submit"
-            >
-              Logg inn
-            </IonButton>
-            <IonButton fill="clear" color="dark">
-              Glemt passord
-            </IonButton>
-          </IonCard>
+        <div className="content">
+          {userInfo ? (
+            <p>{`Logget inn som ${userInfo?.name}`}</p>
+          ) : (
+            <IonSkeletonText animated style={{ width: "88%" }} />
+          )}
+          <IonButton onClick={() => logout()}>Logg ut</IonButton>
         </div>
         <HowTo />
       </IonContent>

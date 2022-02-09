@@ -7,8 +7,17 @@
   margin-top: 2rem;
 }
 .img {
-  max-width: 15rem;
+  max-width: 9rem;
+  margin: 0;
 }
+
+.imgText {
+  max-width: 9rem;
+  margin: 0;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
 .howTitle {
   font-size: 1.2rem;
   font-weight: 600;
@@ -18,6 +27,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 2rem;
+  padding: 0.5rem;
 }
 .content {
   padding: 1rem;

@@ -11,6 +11,7 @@ ion-item.item-has-focus > ion-label {
   border: 1px solid #999;
   border-radius: 0.5rem;
   margin-bottom: 1rem;
+  --inner-border-width: 0;
 }
 .item.item-input.item-has-focus {
   --background: transparent !important;
@@ -19,6 +20,24 @@ ion-item.item-has-focus > ion-label {
   --border-width: 1px !important;
   --border-radius: 0.5rem;
   margin-bottom: 1rem;
+  --highlight-color-focused: #52796f;
+}
+
+.item.item-input.error {
+  --background: transparent !important;
+  border: 1px solid #eb445a;
+  --border-color: #eb445a !important;
+  --highlight-color-focused: #eb445a;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.caption {
+  margin-top: -1rem;
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+  text-align: left;
+  padding-left: 0.5rem;
 }
 
 .orLoginText {
@@ -35,7 +54,6 @@ ion-item.item-has-focus > ion-label {
   left: 0;
   right: 0;
   top: 0;
-  /* transform: translateY(-50%); */
   background-color: #52796f;
 }
 
@@ -47,6 +65,14 @@ ion-item.item-has-focus > ion-label {
   margin: 3rem 0;
 }
 
-#headerTitle {
-  opacity: 1;
+.modal {
+  padding: 1rem;
+}
+
+.title {
+  font-size: 1.8rem;
+}
+
+#errorText {
+  margin-top: 2rem;
 }
