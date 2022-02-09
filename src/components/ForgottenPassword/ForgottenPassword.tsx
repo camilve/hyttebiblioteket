@@ -44,9 +44,19 @@ export const ForgottenPassword: React.FC<ForgottenPassordProps> = ({
             required
             type="email"
             placeholder="E-post"
+            onKeyPress={(e: React.KeyboardEvent) => {
+              if (e.key === "Enter") {
+                onSubmit(email);
+              }
+            }}
           ></IonInput>
         </IonItem>
-        <IonButton color="primary" fill="solid" id="sendButton">
+        <IonButton
+          color="primary"
+          fill="solid"
+          id="sendButton"
+          onClick={() => onSubmit(email)}
+        >
           Send e-post
         </IonButton>
       </div>

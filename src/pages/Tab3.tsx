@@ -8,8 +8,6 @@ import {
   IonToolbar,
   IonSkeletonText,
   IonButton,
-  IonButtons,
-  IonBackButton,
 } from "@ionic/react";
 import { UserType } from "../types/generalTypes";
 import "./Tab3.css";
@@ -21,16 +19,16 @@ const Tab3: React.FC = () => {
   const [user] = useAuthState(auth);
   const [userInfo, setUserInfo] = useState<UserType | undefined>(undefined);
 
-  useEffect(() => {
-    fetchUser();
-  }, [user]);
-
   const fetchUser = async () => {
     if (user && !userInfo) {
       const _user = await userDB.byId(user.uid);
       setUserInfo(_user);
     }
   };
+
+  useEffect(() => {
+    fetchUser();
+  }, [user, fetchUser]);
 
   console.log(user);
   return (
