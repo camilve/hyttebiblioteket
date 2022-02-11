@@ -61,11 +61,11 @@ const LoginScreen: React.FC = () => {
   return (
     <IonPage>
       <IonContent fullscreen>
-        <div className="container">
+        <div className="containerLogin">
           <div className="logoContainer">
             <IonIcon src={logo} className="logo" />
           </div>
-          <IonCard className="card">
+          <IonCard className="logincard">
             <IonButton
               color="secondary"
               fill="solid"
@@ -80,6 +80,7 @@ const LoginScreen: React.FC = () => {
               </IonLabel>
               <IonInput
                 value={email}
+                autocomplete="off"
                 onIonChange={(e: any) => setEmail(e.target.value)}
                 required
                 type="email"
@@ -109,9 +110,7 @@ const LoginScreen: React.FC = () => {
               Logg inn
             </IonButton>
             <IonText color="danger">
-              <p className="caption">
-                {signInError && "Feil e-post eller passord"}
-              </p>
+              <p id="caption">{signInError && "Feil e-post eller passord"}</p>
             </IonText>
             <IonButton
               fill="clear"
@@ -122,7 +121,7 @@ const LoginScreen: React.FC = () => {
             </IonButton>
           </IonCard>
         </div>
-        <HowTo />
+        {/* <HowTo /> */}
         <ForgottenPassword
           open={forgottenPassword}
           onSubmit={(email: string) => resetPassword(email)}

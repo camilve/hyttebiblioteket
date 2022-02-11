@@ -1,0 +1,12 @@
+.segment {
+  margin: 0;
+  width: 100%;
+}
+
+.toolbarSegment {
+  padding: 0.5rem;
+}
+
+.mapContainerBooks {
+  height: calc(100% - 72px);
+}

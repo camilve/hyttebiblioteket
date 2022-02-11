@@ -13,12 +13,20 @@ import {
 } from "@ionic/react";
 import { onAuthStateChanged } from "firebase/auth";
 import { IonReactRouter } from "@ionic/react-router";
-import { home, library, list } from "ionicons/icons";
-import Tab1 from "./pages/Tab1";
-import Tab2 from "./pages/Tab2";
-import Tab3 from "./pages/Tab3";
+import {
+  home,
+  library,
+  list,
+  logIn,
+  personAdd,
+  informationCircle,
+} from "ionicons/icons";
+import MyBooks from "./pages/MyBooks";
+import Books from "./pages/Books";
+import Home from "./pages/Home";
 import LoginScreen from "./pages/LoginScreen";
 import RegistrationScreen from "./pages/Registration";
+import AboutScreen from "./pages/About";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -45,13 +53,30 @@ setupIonicReact();
 
 const PrivateRoutes = () => (
   <IonReactRouter>
-    <IonRouterOutlet>
-      <Route path="/login" component={LoginScreen} exact />
-      <Route path="/register" component={RegistrationScreen} exact />
-      <Route>
-        <Redirect to="/login" />
-      </Route>
-    </IonRouterOutlet>
+    <IonTabs>
+      <IonRouterOutlet>
+        <Route path="/login" component={LoginScreen} exact />
+        <Route path="/register" component={RegistrationScreen} exact />
+        <Route path="/about" component={AboutScreen} exact />
+        <Route>
+          <Redirect to="/login" />
+        </Route>
+      </IonRouterOutlet>
+      <IonTabBar slot="bottom">
+        <IonTabButton tab="login" href="/login">
+          <IonIcon icon={logIn} />
+          <IonLabel>Logg inn</IonLabel>
+        </IonTabButton>
+        <IonTabButton tab="register" href="/register">
+          <IonIcon icon={personAdd} />
+          <IonLabel>Registrer</IonLabel>
+        </IonTabButton>
+        <IonTabButton tab="about" href="/about">
+          <IonIcon icon={informationCircle} />
+          <IonLabel>Om</IonLabel>
+        </IonTabButton>
+      </IonTabBar>
+    </IonTabs>
   </IonReactRouter>
 );
 
@@ -60,13 +85,13 @@ const PublicRoutes = () => (
     <IonTabs>
       <IonRouterOutlet>
         <Route exact path="/books">
-          <Tab1 />
+          <Books />
         </Route>
         <Route exact path="/my-books">
-          <Tab2 />
+          <MyBooks />
         </Route>
         <Route path="/home">
-          <Tab3 />
+          <Home />
         </Route>
         <Route>
           <Redirect to="/home" />

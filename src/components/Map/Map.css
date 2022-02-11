@@ -1,0 +1,46 @@
+.leaflet-container {
+  height: 100%;
+}
+.leaflet-popup-content {
+  max-height: 15rem;
+  overflow-y: auto;
+}
+.leaflet-popup-content p {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+.book-icon {
+  background: #f5f9f2 !important;
+}
+.book-icon::after {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  content: "📘";
+  font-size: 1rem;
+}
+
+.center-icon {
+  background: blue !important;
+  border: 2px solid lightblue;
+}
+.leaflet-marker-icon {
+  background: radial-gradient(#800080 0%, #800080 60%, #80008059 100%);
+  border-radius: 50%;
+  box-shadow: 0px 0px 10px black;
+}
+.leaflet-marker-icon p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  color: white;
+  font-size: 1.2rem;
+  margin: 0;
+}
+.divider {
+  margin: 0.5rem 0;
+}

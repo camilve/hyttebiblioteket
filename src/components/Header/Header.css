@@ -1,0 +1,17 @@
+#logoHeader {
+  width: 2rem;
+  margin-right: 1rem;
+}
+
+#titleContentHeader {
+  display: flex;
+  align-items: center;
+}
+
+.header-ios {
+  --opacity-scale: 1 !important;
+}
+
+#header {
+  z-index: auto;
+}
