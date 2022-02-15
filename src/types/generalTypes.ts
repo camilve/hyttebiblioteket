@@ -9,3 +9,8 @@ export type PositionType = {
   latitude: number;
   longitude: number;
 };
+
+export type LocationError = {
+  showError: boolean;
+  message?: string;
+};

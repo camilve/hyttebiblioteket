@@ -25,20 +25,17 @@ const Tab3: React.FC = () => {
 
   console.log(user);
   return (
-    <IonPage>
-      <Header title="Hyttebiblioteket" />
-      <IonContent fullscreen>
-        <div className="content">
-          {userInfo ? (
-            <p>{`Logget inn som ${userInfo?.name}`}</p>
-          ) : (
-            <IonSkeletonText animated style={{ width: "88%" }} />
-          )}
-          <IonButton onClick={() => logout()}>Logg ut</IonButton>
-        </div>
-        <HowTo />
-      </IonContent>
-    </IonPage>
+    <IonContent fullscreen>
+      <div className="content">
+        {userInfo ? (
+          <p>{`Logget inn som ${userInfo?.name}`}</p>
+        ) : (
+          <IonSkeletonText animated style={{ width: "88%" }} />
+        )}
+        <IonButton onClick={() => logout()}>Logg ut</IonButton>
+      </div>
+      <HowTo />
+    </IonContent>
   );
 };
 

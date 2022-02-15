@@ -26,13 +26,13 @@ type booklistType = {
 };
 
 export type RouteType = {
-  path: string;
   component: React.ComponentType<any>;
-  crumbTransform: (match: MatchParams) => string;
+  header: (match: MatchParams) => string;
+  back: boolean;
 };
 
-interface MatchParams {
-  name?: string;
+export interface MatchParams {
+  title?: string;
   id?: string;
 }
 

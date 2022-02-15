@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Redirect, Route } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import {
   IonApp,
   IonIcon,
@@ -10,6 +10,7 @@ import {
   IonTabs,
   setupIonicReact,
   IonLoading,
+  IonPage,
 } from "@ionic/react";
 import { onAuthStateChanged } from "firebase/auth";
 import { IonReactRouter } from "@ionic/react-router";
@@ -27,6 +28,10 @@ import Home from "./pages/Home";
 import LoginScreen from "./pages/LoginScreen";
 import RegistrationScreen from "./pages/Registration";
 import AboutScreen from "./pages/About";
+import BookScreen from "./pages/Book";
+import RepublishBook from "./pages/RepublishBook";
+import Header from "./components/Header";
+import { BreadCrumbType } from "./types/book";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -80,22 +85,79 @@ const PrivateRoutes = () => (
   </IonReactRouter>
 );
 
+const routes: BreadCrumbType = {
+  "/books": {
+    component: Books,
+    header: () => "Finn bok",
+    back: false,
+  },
+  "/books/:id-:title": {
+    component: BookScreen,
+    header: (match) => match.title || "",
+    back: true,
+  },
+  "/my-books": {
+    component: MyBooks,
+    header: () => "Mine bøker",
+    back: false,
+  },
+  "/my-books/republish-:id": {
+    component: RepublishBook,
+    header: () => "Legg ut bok på nytt",
+    back: true,
+  },
+  "/my-books/:page?": {
+    component: MyBooks,
+    header: () => "Mine bøker",
+    back: false,
+  },
+  "/home": {
+    component: Home,
+    header: () => "Hyttebiblioteket",
+    back: false,
+  },
+};
+
 const PublicRoutes = () => (
   <IonReactRouter>
     <IonTabs>
       <IonRouterOutlet>
-        <Route exact path="/books">
-          <Books />
-        </Route>
-        <Route exact path="/my-books">
-          <MyBooks />
-        </Route>
-        <Route path="/home">
-          <Home />
-        </Route>
-        <Route>
-          <Redirect to="/home" />
-        </Route>
+        <IonPage>
+          <Switch>
+            {Object.keys(routes).map((path) => (
+              <Route
+                key={path}
+                path={path}
+                exact
+                component={() => (
+                  <Header
+                    title={(params) => routes[path].header(params)}
+                    key="header"
+                    back={routes[path].back || false}
+                  />
+                )}
+              />
+            ))}
+          </Switch>
+          <Switch>
+            {Object.keys(routes).map((path) => (
+              <Route
+                key={path}
+                path={path}
+                exact
+                component={routes[path].component}
+              />
+            ))}
+            <Redirect to="/home" />
+            {/*     <Route exact path="/books" component={Books} />
+            <Route exact path="/books/:id-:title" component={BookScreen} />
+            <Route exact path="/my-books" component={MyBooks} />
+            <Route exact path="/my-books/republish-:id" component={RepublishBook} />
+            <Route exact path="/my-books/:page?" component={MyBooks} />
+            <Route path="/home" component={Home} />
+            <Redirect to="/home" /> */}
+          </Switch>
+        </IonPage>
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="books" href="/books">

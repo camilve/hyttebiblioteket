@@ -21,7 +21,7 @@ import { distanceBetween } from "geofire-common";
 import "./Map.css";
 
 interface MapProps {
-  position: LatLng;
+  position?: LatLng;
   center?: LatLng;
   books?: Array<BookType>;
   clickable?: boolean;
@@ -39,7 +39,7 @@ const bookIcon: L.DivIcon = new L.DivIcon({
 });
 
 const Map = ({
-  position,
+  position = undefined,
   center,
   books = [],
   zoom = 15,
@@ -50,7 +50,9 @@ const Map = ({
 }: MapProps) => {
   const history = useHistory();
   const [bookList, setBookList] = useState<KeyBookObjectType>({});
-  const [pos, setPos] = useState(position);
+  const [pos, setPos] = useState(
+    position || L.latLng(63.42996251068396, 10.39284789280902)
+  );
 
   useEffect(() => {
     sortBooksInMap(zoom);
@@ -115,7 +117,11 @@ const Map = ({
 
   return (
     <div style={{ height: "100%" }}>
-      <MapContainer center={center || position} zoom={zoom} zoomControl={false}>
+      <MapContainer
+        center={center || position || pos}
+        zoom={zoom}
+        zoomControl={false}
+      >
         {clickable && <MyComponent />}
         <ZoomTracker />
         <ZoomControl position="bottomright" />
@@ -123,18 +129,20 @@ const Map = ({
           attribution="&copy; <a href='http://osm.org/copyright'>OpenStreetMap</a> contributors"
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker
-          position={pos}
-          icon={
-            new L.DivIcon({
-              className: "center-icon",
-              iconSize: [16, 16],
-              iconAnchor: [8, 8],
-              popupAnchor: [0, -8],
-            })
-          }
-          interactive={false}
-        />
+        {position && (
+          <Marker
+            position={pos}
+            icon={
+              new L.DivIcon({
+                className: "center-icon",
+                iconSize: [16, 16],
+                iconAnchor: [8, 8],
+                popupAnchor: [0, -8],
+              })
+            }
+            interactive={false}
+          />
+        )}
         {distanceCircle && (
           <Circle
             center={pos}

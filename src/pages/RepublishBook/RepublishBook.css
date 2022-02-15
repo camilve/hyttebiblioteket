@@ -1,0 +1,29 @@
+.republishMapContainer {
+  height: 10rem;
+  margin-bottom: 1rem;
+}
+
+.content {
+  padding: 1rem;
+}
+
+.infoText {
+  font-size: 13px !important;
+  white-space: normal;
+  color: #000 !important;
+}
+
+.divider {
+  margin: 1.5rem 0;
+  border-bottom: 1px solid lightgrey;
+}
+
+#toggleBorder {
+  --inner-border-width: 0;
+  --padding-start: 0;
+}
+
+#trashContainer {
+  display: flex;
+  justify-content: flex-end;
+}

@@ -15,3 +15,8 @@
 #header {
   z-index: auto;
 }
+
+.headerTitleSkeleton {
+  line-height: 23px;
+  margin: 20px 0;
+}

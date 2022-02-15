@@ -1,0 +1,9 @@
+.segment {
+  margin: 0;
+  width: 100%;
+}
+
+.toolbarSegment {
+  padding: 0.5rem;
+  background-color: var(--ion-color-primary, #52796f);
+}

@@ -1,0 +1,16 @@
+.bookContainer {
+  padding: 1rem;
+}
+
+.bookTitle {
+  font-size: 1.1rem;
+}
+
+.bookInfo {
+  font-size: 1rem;
+}
+
+.mapContainerBook {
+  height: 12rem;
+  margin-top: 0.5rem;
+}
