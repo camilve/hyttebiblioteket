@@ -31,6 +31,7 @@ import AboutScreen from "./pages/About";
 import BookScreen from "./pages/Book";
 import RepublishBook from "./pages/RepublishBook";
 import AddBook from "./pages/AddBook";
+import EditBook from "./pages/EditBook";
 import Header from "./components/Header";
 import { BreadCrumbType } from "./types/book";
 
@@ -110,6 +111,11 @@ const routes: BreadCrumbType = {
   "/my-books/add": {
     component: AddBook,
     header: () => "Legg ut bok",
+    back: true,
+  },
+  "/my-books/edit-:id": {
+    component: EditBook,
+    header: () => "Rediger bok",
     back: true,
   },
   "/my-books/:page?": {

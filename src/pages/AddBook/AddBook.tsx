@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 import { IonContent, IonSkeletonText } from "@ionic/react";
 import { Geolocation } from "@ionic-native/geolocation";
 
-const AddBook = () => {
+const AddBook: React.FC = () => {
   const history = useHistory();
   const [user, loading] = useAuthState(auth);
   const [position, setPosition] = useState<LatLng | undefined>(undefined);

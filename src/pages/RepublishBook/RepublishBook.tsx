@@ -21,6 +21,7 @@ import {
   IonItem,
   IonLabel,
   IonToggle,
+  IonSkeletonText,
 } from "@ionic/react";
 import { Geolocation } from "@ionic-native/geolocation";
 import { trash } from "ionicons/icons";
@@ -270,6 +271,7 @@ const RepublishBook: React.FC<BookDetailPageProps> = ({ match }) => {
               )}
             </Formik>,
           ]}
+        {(bookLoading || posLoading || loading) && <IonSkeletonText />}
       </div>
     </IonContent>
   );

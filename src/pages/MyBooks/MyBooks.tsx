@@ -103,7 +103,7 @@ const MyBooks: React.FC<BookDetailPageProps> = ({ match }) => {
               <IonItem
                 key={book.id}
                 button
-                onClick={() => history.push(`/books/${book.id}-${book.title}`)}
+                onClick={() => history.push(`/my-books/edit-${book.id}`)}
                 detail
               >
                 <IonLabel>

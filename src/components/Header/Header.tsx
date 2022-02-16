@@ -4,13 +4,16 @@ import {
   IonToolbar,
   IonTitle,
   IonButtons,
-  IonBackButton,
+  IonButton,
   IonSkeletonText,
+  isPlatform,
+  IonIcon,
 } from "@ionic/react";
 import logo from "../../images/logo.svg";
 import "./Header.css";
+import { arrowBackSharp, chevronBack } from "ionicons/icons";
 import { MatchParams } from "../../types/book";
-import { useRouteMatch } from "react-router-dom";
+import { useRouteMatch, useHistory } from "react-router-dom";
 
 type HeaderProps = {
   title: (match: MatchParams) => string;
@@ -24,12 +27,25 @@ const Header: React.FC<HeaderProps> = ({
   loading = false,
 }) => {
   const match = useRouteMatch();
+  const history = useHistory();
+
+  function handleClick() {
+    const path = match.url.split("/");
+    const s = path.slice(0, path.length - 1).join("/");
+    history.replace(s);
+  }
+
   return (
     <IonHeader collapse="fade" id="header">
       <IonToolbar color="primary" mode="md" id="navbar">
         {back && (
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/" />
+            <IonButton onClick={handleClick}>
+              <IonIcon
+                icon={isPlatform("ios") ? chevronBack : arrowBackSharp}
+              />
+            </IonButton>
+            {/* <IonBackButton defaultHref="/" /> */}
           </IonButtons>
         )}
         <IonTitle id="headerTitle">

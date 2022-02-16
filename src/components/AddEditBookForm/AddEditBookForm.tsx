@@ -97,6 +97,7 @@ const AddEditBookForm = ({
               touched={touched}
               handleChange={handleChange}
               required
+              values={values}
               disabled={borrowed}
             />
             <Input
@@ -107,6 +108,7 @@ const AddEditBookForm = ({
               touched={touched}
               handleChange={handleChange}
               required
+              values={values}
               disabled={borrowed}
             />
             <Input
@@ -117,6 +119,7 @@ const AddEditBookForm = ({
               touched={touched}
               handleChange={handleChange}
               required
+              values={values}
               disabled={borrowed}
             />
             <p className="divider" />
@@ -145,6 +148,7 @@ const AddEditBookForm = ({
               touched={touched}
               handleChange={handleChange}
               required
+              values={values}
               disabled={borrowed}
             />
             {values.ownerId === userId && (

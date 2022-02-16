@@ -4,6 +4,7 @@ import { IonItem, IonInput, IonText, IonLabel } from "@ionic/react";
 interface InputProps {
   errors: { [field: string]: string };
   touched: { [field: string]: boolean };
+  values: { [field: string]: any };
   handleBlur: (e: any) => void;
   name: string;
   handleChange: (e: React.ChangeEvent<any>) => void;
@@ -19,6 +20,7 @@ const Input: React.FC<InputProps> = ({
   handleBlur,
   errors,
   touched,
+  values,
   disabled = false,
   placeholder = "",
   required = false,
@@ -37,6 +39,7 @@ const Input: React.FC<InputProps> = ({
         onIonBlur={handleBlur}
         disabled={disabled}
         required={required}
+        value={values[name]}
       ></IonInput>
     </IonItem>
     {!!errors[name] && touched[name] && (
