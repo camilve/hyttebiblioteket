@@ -7,3 +7,8 @@
   padding: 0.5rem;
   background-color: var(--ion-color-primary, #52796f);
 }
+
+.addBtn {
+  display: flex !important;
+  align-items: center;
+}

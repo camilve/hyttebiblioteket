@@ -9,7 +9,10 @@ import {
   IonToolbar,
   IonList,
   IonItem,
+  IonButton,
+  IonIcon,
 } from "@ionic/react";
+import { add } from "ionicons/icons";
 import Header from "../../components/Header";
 import "./MyBooks.css";
 import { RouteComponentProps, useHistory } from "react-router-dom";
@@ -72,6 +75,18 @@ const MyBooks: React.FC<BookDetailPageProps> = ({ match }) => {
       {selectedTable === "0" && !booksLoading && (
         <IonList>
           {!booksLoading && [
+            <IonItem
+              key="add"
+              button
+              detail
+              onClick={() => history.push(`/my-books/add`)}
+            >
+              <IonLabel color="tertiary" className="addBtn">
+                <IonIcon slot="start" icon={add} />
+                Legg ut bok
+                {/* </IonButton> */}
+              </IonLabel>
+            </IonItem>,
             books.length === 0 && (
               <IonItem key="noAvailable">
                 <IonLabel class="ion-text-wrap">

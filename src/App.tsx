@@ -30,6 +30,7 @@ import RegistrationScreen from "./pages/Registration";
 import AboutScreen from "./pages/About";
 import BookScreen from "./pages/Book";
 import RepublishBook from "./pages/RepublishBook";
+import AddBook from "./pages/AddBook";
 import Header from "./components/Header";
 import { BreadCrumbType } from "./types/book";
 
@@ -104,6 +105,11 @@ const routes: BreadCrumbType = {
   "/my-books/republish-:id": {
     component: RepublishBook,
     header: () => "Legg ut bok på nytt",
+    back: true,
+  },
+  "/my-books/add": {
+    component: AddBook,
+    header: () => "Legg ut bok",
     back: true,
   },
   "/my-books/:page?": {

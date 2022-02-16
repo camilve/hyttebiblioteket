@@ -21,7 +21,6 @@ import {
   IonItem,
   IonLabel,
   IonToggle,
-  IonItemDivider,
 } from "@ionic/react";
 import { Geolocation } from "@ionic-native/geolocation";
 import { trash } from "ionicons/icons";
@@ -197,15 +196,7 @@ const RepublishBook: React.FC<BookDetailPageProps> = ({ match }) => {
                   .catch((e) => console.error(e));
               }}
             >
-              {({
-                handleChange,
-                handleBlur,
-                errors,
-                touched,
-                initialValues,
-                setFieldValue,
-                values,
-              }) => (
+              {({ handleChange, handleBlur, setFieldValue, values }) => (
                 <Form>
                   <IonItem>
                     <IonLabel>Tittel: </IonLabel>
@@ -283,34 +274,5 @@ const RepublishBook: React.FC<BookDetailPageProps> = ({ match }) => {
     </IonContent>
   );
 };
-
-/* const useStyles = makeStyles({
-  title: {
-    fontSize: "2.2rem",
-  },
-  flexcontainer: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignItems: "flex-start",
-  },
-  deletebtn: {
-    "&:hover": {
-      backgroundColor: "red",
-      color: "white",
-    },
-  },
-  deletebutton: {
-    color: "red",
-    borderColor: "red",
-    marginLeft: "1rem",
-  },
-  mb: {
-    marginBottom: "1rem",
-  },
-  deleteLink: {
-    color: "red",
-    textDecoration: "underline",
-  },
-}); */
 
 export default RepublishBook;
