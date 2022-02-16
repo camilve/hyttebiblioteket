@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import {
-  IonPage,
   IonContent,
   IonText,
+  IonToast,
   IonSkeletonText,
   IonButton,
 } from "@ionic/react";
 import L, { LatLng } from "leaflet";
-import Header from "../../components/Header";
 import { useHistory } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import * as bookDB from "../../db/repositories/books";
@@ -140,7 +139,6 @@ const Book: React.FC<BookDetailPageProps> = ({ match }) => {
                       history.push("/my-books/1");
                     })
                     .catch((e) => console.error(e));
-                  // bookDB.deleteBook(book.id).then(() => history.push("/books"));
                 }}
               >
                 Registrer som hentet
@@ -148,7 +146,7 @@ const Book: React.FC<BookDetailPageProps> = ({ match }) => {
             )}
           </>
         )}
-        {(bookLoading || posLoading) && (
+        {(bookLoading || posLoading || loading) && (
           <>
             <IonText color="tertiary">
               <p>
@@ -168,6 +166,14 @@ const Book: React.FC<BookDetailPageProps> = ({ match }) => {
             </IonText>
           </>
         )}
+        <IonToast
+          isOpen={locationError.showError}
+          message={locationError.message}
+          onDidDismiss={() =>
+            setLocationError({ showError: false, message: undefined })
+          }
+          duration={4000}
+        />
       </div>
     </IonContent>
   );

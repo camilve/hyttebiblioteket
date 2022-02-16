@@ -14,6 +14,7 @@ import {
   IonButton,
   IonAlert,
   IonIcon,
+  IonText,
 } from "@ionic/react";
 import { trash } from "ionicons/icons";
 /* import Skeleton from "react-loading-skeleton";
@@ -77,7 +78,7 @@ const EditBook: React.FC<BookDetailPageProps> = ({ match }) => {
             >
               <span>
                 <Button
-                  variant="outlined"
+                
                   onClick={() => setDeleteDialogOpen(true)}
                   className={classes.deletebtn}
                   disabled={book.ownership && book.ownerId !== user.uid}
@@ -88,148 +89,95 @@ const EditBook: React.FC<BookDetailPageProps> = ({ match }) => {
             </Tooltip>
           </Hidden>
         )} */}
-        {book &&
-          user &&
-          (book.ownership && book.ownerId !== user.uid ? (
-            <div key="content">
-              <p key="owner">
-                <i>{`Boka tilhører ${owner?.name}`}</i>
-              </p>
-            </div>
-          ) : (
-            <div key="content" id="trashContainer">
-              <IonButton
-                onClick={() => setDeleteAlert(true)}
-                key="btn"
-                fill="clear"
-              >
-                <IonIcon slot="icon-only" icon={trash} />
-              </IonButton>
-              <IonAlert
-                key="alert"
-                isOpen={deleteAlert}
-                onDidDismiss={() => setDeleteAlert(false)}
-                /* cssClass='my-custom-class' */
-                header={"Slett bok"}
-                message={
-                  book.ownership && book.ownerId !== user.uid
-                    ? "Boka har eierskap og kan derfor ikke slettes."
-                    : "Er du sikker på at du vil slette boka?"
-                }
-                buttons={
-                  book.ownership && book.ownerId !== user.uid
-                    ? [
-                        {
-                          text: "Lukk",
-                          role: "cancel",
-                          cssClass: "secondary",
-                          id: "cancel-button",
-                          handler: () => {
-                            setDeleteAlert(false);
-                          },
-                        },
-                      ]
-                    : [
-                        {
-                          text: "Avbryt",
-                          role: "cancel",
-                          cssClass: "secondary",
-                          id: "cancel-button",
-                          handler: () => {
-                            setDeleteAlert(false);
-                          },
-                        },
-                        {
-                          text: "Slett",
-                          id: "delete-button",
-                          handler: () => {
-                            bookDB
-                              .deleteBook(book.id)
-                              .then(() => history.push("/my-books"));
-                          },
-                        },
-                      ]
-                }
-              />
-            </div>
-          ))}
-        {/*   <Hidden xsDown key="button">
-            <Tooltip
-              title={
-                book.ownership && book.ownerId !== user.uid
-                  ? "Boka har eierskap, og kan derfor ikke slettes"
-                  : ""
-              }
+        {book && user && !(book.ownership && book.ownerId !== user.uid) && (
+          <div key="content" id="trashContainer">
+            <IonButton
+              onClick={() => setDeleteAlert(true)}
+              key="btn"
+              fill="clear"
             >
-              <span>
-                <Button
-                  variant="outlined"
-                  onClick={() => setDeleteDialogOpen(true)}
-                  className={classes.deletebtn}
-                  disabled={book.ownership && book.ownerId !== user.uid}
-                >
-                  Slett bok
-                </Button>
-              </span>
-            </Tooltip>
-        </Hidden>,
-        <Dialog
-          key="dialog"
-          fullWidth
-          maxWidth="xs"
-          open={!!deleteDialogOpen}
-          onClose={() => setDeleteDialogOpen(false)}
-        >
-          <DialogContent>
-            <Typography variant="body1" className={classes.mb}>
-              Er du sikker på at du vil slette boka?
-            </Typography>
-            <div className={classes.flexcontainer}>
-              <Button
-                variant="outlined"
-                onClick={() => setDeleteDialogOpen(false)}
-              >
-                Avbryt
-              </Button>
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  bookDB
-                    .deleteBook(book.id)
-                    .then(() => history.push("/my-books"));
-                }}
-                className={classes.deletebutton}
-              >
-                Slett
-              </Button>
-            </div>
-          </DialogContent>
-              </Dialog>, */}
+              <IonIcon slot="icon-only" icon={trash} />
+            </IonButton>
+            <IonAlert
+              key="alert"
+              isOpen={deleteAlert}
+              onDidDismiss={() => setDeleteAlert(false)}
+              header={"Slett bok"}
+              message={
+                book.ownership && book.ownerId !== user.uid
+                  ? "Boka har eierskap og kan derfor ikke slettes."
+                  : "Er du sikker på at du vil slette boka?"
+              }
+              buttons={
+                book.ownership && book.ownerId !== user.uid
+                  ? [
+                      {
+                        text: "Lukk",
+                        role: "cancel",
+                        cssClass: "secondary",
+                        id: "cancel-button",
+                        handler: () => {
+                          setDeleteAlert(false);
+                        },
+                      },
+                    ]
+                  : [
+                      {
+                        text: "Avbryt",
+                        role: "cancel",
+                        cssClass: "secondary",
+                        id: "cancel-button",
+                        handler: () => {
+                          setDeleteAlert(false);
+                        },
+                      },
+                      {
+                        text: "Slett",
+                        id: "delete-button",
+                        handler: () => {
+                          bookDB
+                            .deleteBook(book.id)
+                            .then(() => history.push("/my-books"));
+                        },
+                      },
+                    ]
+              }
+            />
+          </div>
+        )}
 
-        {/*     {borrower && (
-          <ContentWrapper>
+        {borrower && user && (
+          <>
             {book?.borrowed ? (
               <>
-                <Typography variant="body1">{`Boka er lånt ut til ${borrower.name}.`}</Typography>
-                <Typography variant="body2">{`Hvis du ikke lenger ønsker eierskap for boka kan du endre dette når som helst.`}</Typography>
+                <IonText>
+                  <i>
+                    {`Boka er lånt ut til ${borrower.name}.`}
+                    <p>{`Hvis du ikke lenger ønsker eierskap for boka kan du endre dette når som helst.`}</p>
+                  </i>
+                </IonText>
               </>
             ) : (
               <>
                 {book?.borrowedBy === user.uid ? (
                   <>
-                    <Typography variant="body1">{`Du la ut boka sist.`}</Typography>
-                    <Typography variant="body2">{`Denne tilhører ${owner?.name}.`}</Typography>
+                    <IonText>
+                      <i>
+                        {`Du la ut boka sist.`}
+                        <p>{`Boka tilhører ${owner?.name}.`}</p>
+                      </i>
+                    </IonText>
                   </>
                 ) : (
                   <>
-                    <Typography variant="body1">{`Boka ble sist lagt ut av ${borrower.name}.`}</Typography>
-                    <Typography variant="body2">{`Hvis du ikke lenger ønsker oversikt over boka, kan du endre dette når som helst.`}</Typography>
+                    <IonText>{`Boka ble sist lagt ut av ${borrower.name}.`}</IonText>
+                    <IonText>{`Hvis du ikke lenger ønsker oversikt over boka, kan du endre dette når som helst.`}</IonText>
                   </>
                 )}
               </>
             )}
-          </ContentWrapper>
-      )}  */}
+          </>
+        )}
         {(bookLoading || loading) && <IonSkeletonText />}
 
         {book && user && (

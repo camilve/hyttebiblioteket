@@ -12,7 +12,6 @@ import {
   IonIcon,
 } from "@ionic/react";
 import logo from "../../images/logo.svg";
-import HowTo from "../../components/how-to";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
 import { registerWithEmailAndPassword } from "../../db/index";

@@ -24,7 +24,7 @@ import {
   IonSkeletonText,
 } from "@ionic/react";
 import { Geolocation } from "@ionic-native/geolocation";
-import { trash } from "ionicons/icons";
+import { trash, checkmark } from "ionicons/icons";
 import "./RepublishBook.css";
 
 interface BookDetailPageProps
@@ -261,10 +261,8 @@ const RepublishBook: React.FC<BookDetailPageProps> = ({ match }) => {
                       />
                     </IonItem>,
                   ]}
-                  <IonButton onClick={() => history.push("/my-books")}>
-                    Avbryt
-                  </IonButton>
-                  <IonButton type="submit" color="primary">
+                  <IonButton expand="block" type="submit" color="primary">
+                    <IonIcon slot="end" icon={checkmark} />
                     Legg ut boka på nytt
                   </IonButton>
                 </Form>

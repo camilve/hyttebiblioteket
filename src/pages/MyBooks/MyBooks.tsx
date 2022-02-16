@@ -4,16 +4,14 @@ import {
   IonContent,
   IonSegment,
   IonSegmentButton,
-  IonPage,
   IonLabel,
   IonToolbar,
   IonList,
   IonItem,
-  IonButton,
+  IonSkeletonText,
   IonIcon,
 } from "@ionic/react";
 import { add } from "ionicons/icons";
-import Header from "../../components/Header";
 import "./MyBooks.css";
 import { RouteComponentProps, useHistory } from "react-router-dom";
 import { BookType } from "../../types/book";
@@ -84,18 +82,12 @@ const MyBooks: React.FC<BookDetailPageProps> = ({ match }) => {
               <IonLabel color="tertiary" className="addBtn">
                 <IonIcon slot="start" icon={add} />
                 Legg ut bok
-                {/* </IonButton> */}
               </IonLabel>
             </IonItem>,
             books.length === 0 && (
               <IonItem key="noAvailable">
                 <IonLabel class="ion-text-wrap">
-                  Ingen tilgjengelige
-                  {/* <p>{`${
-                        !position
-                          ? "Du må tillate posisjon for å finne bøker."
-                          : ""
-                      }`}</p> */}
+                  Du har ingen bøker som ligger ute.
                 </IonLabel>
               </IonItem>
             ),
@@ -109,17 +101,7 @@ const MyBooks: React.FC<BookDetailPageProps> = ({ match }) => {
                 <IonLabel>
                   {book.title}
                   <p>{`Av ${book.author}`}</p>
-                  <p>
-                    {/*  {`${
-                          position &&
-                          getDistanceFromLatLonInKm(
-                            position.lat,
-                            position.lng,
-                            book.position.latitude,
-                            book.position.longitude
-                          )
-                        } km`} */}
-                  </p>
+                  <p />
                 </IonLabel>
               </IonItem>
             )),
@@ -132,12 +114,7 @@ const MyBooks: React.FC<BookDetailPageProps> = ({ match }) => {
             borrowedBooks.length === 0 && (
               <IonItem key="noAvailable">
                 <IonLabel class="ion-text-wrap">
-                  Ingen tilgjengelige
-                  {/* <p>{`${
-                        !position
-                          ? "Du må tillate posisjon for å finne bøker."
-                          : ""
-                      }`}</p> */}
+                  Du har ingen lånte bøker.
                 </IonLabel>
               </IonItem>
             ),
@@ -151,21 +128,25 @@ const MyBooks: React.FC<BookDetailPageProps> = ({ match }) => {
                 <IonLabel>
                   {book.title}
                   <p>{`Av ${book.author}`}</p>
-                  <p>
-                    {/*  {`${
-                          position &&
-                          getDistanceFromLatLonInKm(
-                            position.lat,
-                            position.lng,
-                            book.position.latitude,
-                            book.position.longitude
-                          )
-                        } km`} */}
-                  </p>
+                  <p></p>
                 </IonLabel>
               </IonItem>
             )),
           ]}
+        </IonList>
+      )}
+      {(booksLoading || loading) && (
+        <IonList>
+          {Object.keys(Array(5).fill(0)).map((val) => (
+            <IonItem key={`skel-${val}`}>
+              <IonLabel>
+                <IonSkeletonText animated style={{ width: "88%" }} />
+                <p>
+                  <IonSkeletonText animated style={{ width: "75%" }} />
+                </p>
+              </IonLabel>
+            </IonItem>
+          ))}
         </IonList>
       )}
     </IonContent>

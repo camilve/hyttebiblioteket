@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import * as userDB from "../../db/repositories/users";
-import { IonContent, IonPage, IonSkeletonText, IonButton } from "@ionic/react";
+import { IonContent, IonSkeletonText, IonButton } from "@ionic/react";
 import { UserType } from "../../types/generalTypes";
 import "./Home.css";
 import HowTo from "../../components/how-to";
-import Header from "../../components/Header";
 import { logout, auth } from "../../db/index";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -23,7 +22,6 @@ const Tab3: React.FC = () => {
     fetchUser();
   });
 
-  console.log(user);
   return (
     <IonContent fullscreen>
       <div className="content">

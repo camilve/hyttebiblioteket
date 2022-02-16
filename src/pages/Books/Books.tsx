@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   IonContent,
-  IonPage,
   IonToolbar,
   IonList,
   IonItem,
@@ -19,7 +18,6 @@ import { BookType } from "../../types/book";
 import { LocationError } from "../../types/generalTypes";
 import "./Books.css";
 import { IonSegment, IonSegmentButton, IonLabel } from "@ionic/react";
-import Header from "../../components/Header";
 import { getLocationErrorMessage } from "../../help-functions/error";
 import { getDistanceFromLatLonInKm } from "../../help-functions/distance";
 import { Geolocation } from "@ionic-native/geolocation";
@@ -80,8 +78,6 @@ const Books: React.FC = () => {
   };
 
   return (
-    /* <IonPage>
-      <Header title="Finn bok" /> */
     <IonContent fullscreen>
       <IonToolbar color="primary" className="toolbarSegment">
         <IonItem id="selectDistance">
@@ -160,17 +156,6 @@ const Books: React.FC = () => {
                 </IonItem>
               )),
             ]}
-          {(posLoading || bookLoading) &&
-            Object.keys(Array(5).fill(0)).map((val) => (
-              <IonItem key={`skel-${val}`}>
-                <IonLabel>
-                  <IonSkeletonText animated style={{ width: "88%" }} />
-                  <p>
-                    <IonSkeletonText animated style={{ width: "75%" }} />
-                  </p>
-                </IonLabel>
-              </IonItem>
-            ))}
         </IonList>
       )}
       {selectedTable === "1" &&
@@ -179,7 +164,6 @@ const Books: React.FC = () => {
           position && (
             <div className="mapContainerBooks" key="map">
               <Map
-                height="30rem"
                 position={position}
                 books={books}
                 distanceCircle={distance * 1000}
@@ -199,6 +183,21 @@ const Books: React.FC = () => {
             </IonList>
           ),
         ]}
+      {(posLoading || bookLoading || loading) && (
+        <IonList>
+          {Object.keys(Array(5).fill(0)).map((val) => (
+            <IonItem key={`skel-${val}`}>
+              <IonLabel>
+                <IonSkeletonText animated style={{ width: "88%" }} />
+                <p>
+                  <IonSkeletonText animated style={{ width: "75%" }} />
+                </p>
+              </IonLabel>
+            </IonItem>
+          ))}
+        </IonList>
+      )}
+
       <IonToast
         isOpen={locationError.showError}
         message={locationError.message}
@@ -208,7 +207,6 @@ const Books: React.FC = () => {
         duration={4000}
       />
     </IonContent>
-    /*   </IonPage> */
   );
 };
 

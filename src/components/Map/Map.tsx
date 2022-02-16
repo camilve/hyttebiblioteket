@@ -27,7 +27,6 @@ interface MapProps {
   clickable?: boolean;
   zoom?: number;
   setPosition?: (pos: LatLng) => void;
-  height?: string;
   distanceCircle?: number | null;
 }
 
@@ -45,7 +44,6 @@ const Map = ({
   zoom = 15,
   clickable = false,
   setPosition = undefined,
-  height = "20rem",
   distanceCircle = null,
 }: MapProps) => {
   const history = useHistory();
