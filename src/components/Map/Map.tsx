@@ -3,11 +3,7 @@ import L, { LatLng } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { BookType, KeyBookObjectType } from "../../types/book";
 import { useHistory } from "react-router-dom";
-/* import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import Divider from "@material-ui/core/Divider";
-import ArrowRight from "@material-ui/icons/ArrowRight"; */
+import { IonButton, IonIcon } from "@ionic/react";
 import {
   MapContainer,
   Marker,
@@ -17,6 +13,7 @@ import {
   Circle,
   ZoomControl,
 } from "react-leaflet";
+import { chevronForward } from "ionicons/icons";
 import { distanceBetween } from "geofire-common";
 import "./Map.css";
 
@@ -28,6 +25,7 @@ interface MapProps {
   zoom?: number;
   setPosition?: (pos: LatLng) => void;
   distanceCircle?: number | null;
+  clickableBooks?: boolean;
 }
 
 const bookIcon: L.DivIcon = new L.DivIcon({
@@ -45,6 +43,7 @@ const Map = ({
   clickable = false,
   setPosition = undefined,
   distanceCircle = null,
+  clickableBooks = false,
 }: MapProps) => {
   const history = useHistory();
   const [bookList, setBookList] = useState<KeyBookObjectType>({});
@@ -167,25 +166,29 @@ const Map = ({
               }
               key={book.id}
             >
-              <Popup>
-                {bookList[key].books.map((b: BookType, index: number) => (
-                  <div key={b.id}>
-                    {/*   <Typography>{`${b.title} av ${b.author}`}</Typography>
-                    <IonButton
-                      variant="outlined"
-                      color="primary"
-                      onClick={() => history.push(`/books/${b.id}-${b.title}`)}
-                      endIcon={<ArrowRight />}
-                    >
-                      Se bok
-                    </Button>
-                    {index + 1 !== bookList[key].books.length && (
-                      <Divider className={classes.divider} />
-                    )} */}
-                    {b.title}
-                  </div>
-                ))}
-              </Popup>
+              {clickableBooks && (
+                <Popup>
+                  {bookList[key].books.map((b: BookType, index: number) => (
+                    <div key={b.id}>
+                      <p>{`${b.title} av ${b.author}`}</p>
+
+                      <IonButton
+                        fill="outline"
+                        color="primary"
+                        onClick={() =>
+                          history.push(`/books/${b.id}-${b.title}`)
+                        }
+                      >
+                        <IonIcon slot="end" icon={chevronForward} />
+                        Se bok
+                      </IonButton>
+                      {index + 1 !== bookList[key].books.length && (
+                        <p className="divider" />
+                      )}
+                    </div>
+                  ))}
+                </Popup>
+              )}
             </Marker>
           );
         })}

@@ -17,8 +17,6 @@ import {
   IonText,
 } from "@ionic/react";
 import { trash } from "ionicons/icons";
-/* import Skeleton from "react-loading-skeleton";
-import ContentWrapper from "../components/content-wrapper"; */
 
 interface BookDetailPageProps
   extends RouteComponentProps<{
@@ -67,28 +65,6 @@ const EditBook: React.FC<BookDetailPageProps> = ({ match }) => {
   return (
     <IonContent>
       <div className="content">
-        {/*    {book && (
-          <Hidden smUp>
-            <Tooltip
-              title={
-                book.ownership && book.ownerId !== user.uid
-                  ? "Boka har eierskap, og kan derfor ikke slettes"
-                  : ""
-              }
-            >
-              <span>
-                <Button
-                
-                  onClick={() => setDeleteDialogOpen(true)}
-                  className={classes.deletebtn}
-                  disabled={book.ownership && book.ownerId !== user.uid}
-                >
-                  Slett bok
-                </Button>
-              </span>
-            </Tooltip>
-          </Hidden>
-        )} */}
         {book && user && !(book.ownership && book.ownerId !== user.uid) && (
           <div key="content" id="trashContainer">
             <IonButton
@@ -170,8 +146,12 @@ const EditBook: React.FC<BookDetailPageProps> = ({ match }) => {
                   </>
                 ) : (
                   <>
-                    <IonText>{`Boka ble sist lagt ut av ${borrower.name}.`}</IonText>
-                    <IonText>{`Hvis du ikke lenger ønsker oversikt over boka, kan du endre dette når som helst.`}</IonText>
+                    <IonText>
+                      <i>
+                        {`Boka ble sist lagt ut av ${borrower.name}.`}
+                        <p>{`Hvis du ikke lenger ønsker oversikt over boka, kan du endre dette når som helst.`}</p>
+                      </i>
+                    </IonText>
                   </>
                 )}
               </>

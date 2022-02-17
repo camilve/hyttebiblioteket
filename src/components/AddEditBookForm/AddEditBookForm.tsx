@@ -14,6 +14,7 @@ import {
   IonToggle,
   IonLabel,
   IonIcon,
+  IonTextarea,
 } from "@ionic/react";
 import { checkmark } from "ionicons/icons";
 
@@ -140,17 +141,29 @@ const AddEditBookForm = ({
               />
             </div>
             <IonText color="primary">Kommentar</IonText>
-            <Input
-              name="comment"
-              placeholder="Gi en beskrivelse hvor boka ligger."
-              handleBlur={handleBlur}
-              errors={errors}
-              touched={touched}
-              handleChange={handleChange}
-              required
-              values={values}
-              disabled={borrowed}
-            />
+            <IonItem
+              className={
+                !!errors.comment && touched.comment ? "error" : "noError"
+              }
+            >
+              <IonTextarea
+                name="comment"
+                onIonChange={(e: any) => {
+                  handleChange(e);
+                }}
+                required
+                disabled={borrowed}
+                placeholder="Gi en beskrivelse hvor boka ligger."
+                onIonBlur={handleBlur}
+                value={values.comment}
+                rows={5}
+              />
+            </IonItem>
+            {!!errors.comment && touched.comment && (
+              <IonText color="danger">
+                <p className="caption">{errors.comment}</p>
+              </IonText>
+            )}
             {values.ownerId === userId && (
               <>
                 <p className="divider" />

@@ -76,7 +76,8 @@ export const allInRadius = async (
         if (
           distanceInM <= radius &&
           doc.get("ownerId") !== userId &&
-          doc.get("borrowedBy") !== userId
+          doc.get("borrowedBy") !== userId &&
+          doc.get("borrowed") === false
         ) {
           data.push({
             id: doc.id, // because id field in separate function in firestore

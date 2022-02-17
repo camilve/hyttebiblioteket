@@ -8,6 +8,8 @@ import {
   IonToast,
   IonSelect,
   IonSelectOption,
+  IonRefresher,
+  IonRefresherContent,
 } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -22,10 +24,15 @@ import { getLocationErrorMessage } from "../../help-functions/error";
 import { getDistanceFromLatLonInKm } from "../../help-functions/distance";
 import { Geolocation } from "@ionic-native/geolocation";
 import Map from "../../components/Map";
+import { RefresherEventDetail } from "@ionic/core";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedTable } from "../../services/selectTable.actions";
 
 const Books: React.FC = () => {
   const history = useHistory();
-  const [selectedTable, setSelectedTable] = useState("0");
+  const dispatch = useDispatch();
+  const booksState = useSelector((state: any) => state.selectedTableBooks);
+  const selectedTable = booksState.selectedTable || "0";
   const [books, setBooks] = useState<Array<BookType>>([]);
   const [bookLoading, setBookLoading] = useState<boolean>(false);
   const [posLoading, setPosLoading] = useState<boolean>(false);
@@ -34,12 +41,11 @@ const Books: React.FC = () => {
     showError: false,
   });
   const [position, setPosition] = useState<LatLng | undefined>(undefined);
-  const geo = navigator.geolocation;
   const [user, loading] = useAuthState(auth);
 
   useEffect(() => {
     getLocation();
-  }, [geo, user]);
+  }, [user]);
 
   const fetchBooks = async (pos: LatLng, dis: number) => {
     if (pos && user) {
@@ -100,7 +106,9 @@ const Books: React.FC = () => {
       </IonToolbar>
       <IonToolbar color="primary" className="toolbarSegment">
         <IonSegment
-          onIonChange={(e: any) => setSelectedTable(e.detail.value)}
+          onIonChange={(e: any) =>
+            dispatch(setSelectedTable("BOOKS", e.detail.value))
+          }
           className="segment"
           value={selectedTable}
           mode="ios"
@@ -114,49 +122,63 @@ const Books: React.FC = () => {
         </IonSegment>
       </IonToolbar>
       {selectedTable === "0" && (
-        <IonList>
-          {!posLoading &&
-            !bookLoading && [
-              books.length === 0 && (
-                <IonItem key="noAvailable">
-                  <IonLabel class="ion-text-wrap">
-                    Ingen tilgjengelige
-                    <p>{`${
-                      !position
-                        ? "Du må tillate posisjon for å finne bøker."
-                        : ""
-                    }`}</p>
-                  </IonLabel>
-                </IonItem>
-              ),
-              books.map((book: BookType) => (
-                <IonItem
-                  key={book.id}
-                  button
-                  onClick={() =>
-                    history.push(`/books/${book.id}-${book.title}`)
-                  }
-                  detail
-                >
-                  <IonLabel>
-                    {book.title}
-                    <p>{`Av ${book.author}`}</p>
-                    <p>
-                      {`${
-                        position &&
-                        getDistanceFromLatLonInKm(
-                          position.lat,
-                          position.lng,
-                          book.position.latitude,
-                          book.position.longitude
-                        )
-                      } km`}
-                    </p>
-                  </IonLabel>
-                </IonItem>
-              )),
-            ]}
-        </IonList>
+        <>
+          <IonRefresher
+            closeDuration="1ms"
+            slot="fixed"
+            onIonRefresh={(event: CustomEvent<RefresherEventDetail>) => {
+              getLocation();
+              setTimeout(() => {
+                event.detail.complete();
+              }, 1);
+            }}
+          >
+            <IonRefresherContent></IonRefresherContent>
+          </IonRefresher>
+          <IonList>
+            {!posLoading &&
+              !bookLoading && [
+                books.length === 0 && (
+                  <IonItem key="noAvailable">
+                    <IonLabel class="ion-text-wrap">
+                      Ingen tilgjengelige
+                      <p>{`${
+                        !position
+                          ? "Du må tillate posisjon for å finne bøker."
+                          : ""
+                      }`}</p>
+                    </IonLabel>
+                  </IonItem>
+                ),
+                books.map((book: BookType) => (
+                  <IonItem
+                    key={book.id}
+                    button
+                    onClick={() =>
+                      history.push(`/books/${book.id}-${book.title}`)
+                    }
+                    detail
+                  >
+                    <IonLabel>
+                      {book.title}
+                      <p>{`Av ${book.author}`}</p>
+                      <p>
+                        {`${
+                          position &&
+                          getDistanceFromLatLonInKm(
+                            position.lat,
+                            position.lng,
+                            book.position.latitude,
+                            book.position.longitude
+                          )
+                        } km`}
+                      </p>
+                    </IonLabel>
+                  </IonItem>
+                )),
+              ]}
+          </IonList>
+        </>
       )}
       {selectedTable === "1" &&
         !posLoading &&
@@ -167,6 +189,7 @@ const Books: React.FC = () => {
                 position={position}
                 books={books}
                 distanceCircle={distance * 1000}
+                clickableBooks
               />
             </div>
           ),
@@ -197,7 +220,6 @@ const Books: React.FC = () => {
           ))}
         </IonList>
       )}
-
       <IonToast
         isOpen={locationError.showError}
         message={locationError.message}

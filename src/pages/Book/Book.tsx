@@ -19,6 +19,8 @@ import { getDistanceFromLatLonInKm } from "../../help-functions/distance";
 import { Geolocation } from "@ionic-native/geolocation";
 import { RouteComponentProps } from "react-router-dom";
 import { LocationError } from "../../types/generalTypes";
+import { useDispatch } from "react-redux";
+import { setSelectedTable } from "../../services/selectTable.actions";
 
 interface BookDetailPageProps
   extends RouteComponentProps<{
@@ -30,6 +32,7 @@ interface BookDetailPageProps
 
 const Book: React.FC<BookDetailPageProps> = ({ match }) => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const { id } = match.params;
   const [book, setBook] = useState<BookType | undefined>(undefined);
   const [bookLoading, setBookLoading] = useState(false);
@@ -50,7 +53,18 @@ const Book: React.FC<BookDetailPageProps> = ({ match }) => {
       setBookLoading(true);
       setBook(undefined);
       const _books = await bookDB.byId(id);
-      // if (!_books) history.push("/books");
+      if (!_books) {
+        history.push("/books");
+        return;
+      }
+      if (
+        _books.borrowed ||
+        _books.borrowedBy === user.uid ||
+        _books.ownerId === user.uid
+      ) {
+        history.push("/books");
+        return;
+      }
       setBook(_books);
       setBookLoading(false);
     }
@@ -136,7 +150,8 @@ const Book: React.FC<BookDetailPageProps> = ({ match }) => {
                   bookDB
                     .updateBook(id, newBook)
                     .then(() => {
-                      history.push("/my-books/1");
+                      dispatch(setSelectedTable("MY_BOOKS", "1"));
+                      history.push("/my-books");
                     })
                     .catch((e) => console.error(e));
                 }}

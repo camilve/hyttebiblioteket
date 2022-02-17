@@ -22,10 +22,12 @@ import {
   IonLabel,
   IonToggle,
   IonSkeletonText,
+  IonTextarea,
 } from "@ionic/react";
 import { Geolocation } from "@ionic-native/geolocation";
 import { trash, checkmark } from "ionicons/icons";
 import "./RepublishBook.css";
+import * as yup from "yup";
 
 interface BookDetailPageProps
   extends RouteComponentProps<{
@@ -114,7 +116,6 @@ const RepublishBook: React.FC<BookDetailPageProps> = ({ match }) => {
                   key="alert"
                   isOpen={deleteAlert}
                   onDidDismiss={() => setDeleteAlert(false)}
-                  /* cssClass='my-custom-class' */
                   header={"Slett bok"}
                   message={
                     book.ownership && book.ownerId !== user.uid
@@ -168,7 +169,11 @@ const RepublishBook: React.FC<BookDetailPageProps> = ({ match }) => {
                 geohash: book?.geohash || "",
                 ownership: book?.ownership || false,
               }}
+              validationSchema={yup.object().shape({
+                comment: yup.string().required("Feltet er påkrevd"),
+              })}
               onSubmit={(val) => {
+                console.log(val);
                 const values: BookType = {
                   id: book.id,
                   title: book.title,
@@ -197,7 +202,14 @@ const RepublishBook: React.FC<BookDetailPageProps> = ({ match }) => {
                   .catch((e) => console.error(e));
               }}
             >
-              {({ handleChange, handleBlur, setFieldValue, values }) => (
+              {({
+                handleChange,
+                handleBlur,
+                setFieldValue,
+                values,
+                errors,
+                touched,
+              }) => (
                 <Form>
                   <IonItem>
                     <IonLabel>Tittel: </IonLabel>
@@ -230,18 +242,28 @@ const RepublishBook: React.FC<BookDetailPageProps> = ({ match }) => {
                   </div>
                   <IonText color="primary">Kommentar</IonText>
                   <p />
-                  <IonItem>
-                    <IonInput
-                      placeholder="Gi en beskrivelse hvor boka ligger."
+                  <IonItem
+                    className={
+                      !!errors.comment && touched.comment ? "error" : "noError"
+                    }
+                  >
+                    <IonTextarea
+                      name="comment"
                       onIonChange={(e: any) => {
                         handleChange(e);
                       }}
                       required
-                      type="text"
+                      placeholder="Gi en beskrivelse hvor boka ligger."
                       onIonBlur={handleBlur}
-                      name="comment"
+                      value={values.comment}
+                      rows={5}
                     />
                   </IonItem>
+                  {!!errors.comment && touched.comment && (
+                    <IonText color="danger">
+                      <p className="caption">{errors.comment}</p>
+                    </IonText>
+                  )}
                   {book.ownerId === user.uid && [
                     <p className="divider" key="divider" />,
                     <IonItem key="toggle" id="toggleBorder">

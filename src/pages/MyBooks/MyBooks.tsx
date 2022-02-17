@@ -13,21 +13,19 @@ import {
 } from "@ionic/react";
 import { add } from "ionicons/icons";
 import "./MyBooks.css";
-import { RouteComponentProps, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { BookType } from "../../types/book";
 import { auth } from "../../db/index";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedTable } from "../../services/selectTable.actions";
 
-interface BookDetailPageProps
-  extends RouteComponentProps<{
-    page: string;
-  }> {}
-
-const MyBooks: React.FC<BookDetailPageProps> = ({ match }) => {
-  const { page } = match.params;
+const MyBooks: React.FC = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
+  const booksState = useSelector((state: any) => state.selectedTableMyBooks);
   const [user, loading] = useAuthState(auth);
-  const [selectedTable, setSelectedTable] = useState(page || "0");
+  const selectedTable = booksState.selectedTable || "0";
   const [books, setBooks] = useState<Array<BookType>>([]);
   const [borrowedBooks, setBorrowedBooks] = useState<Array<BookType>>([]);
   const [booksLoading, setBooksLoading] = useState<boolean>(false);
@@ -55,8 +53,8 @@ const MyBooks: React.FC<BookDetailPageProps> = ({ match }) => {
       <IonToolbar color="primary" className="toolbarSegment">
         <IonSegment
           onIonChange={(e: any) => {
-            setSelectedTable(e.detail.value);
-            history.push(`/my-books/${e.detail.value}`);
+            dispatch(setSelectedTable("MY_BOOKS", e.detail.value));
+            /* history.push(`/my-books/${e.detail.value}`); */
           }}
           className="segment"
           value={selectedTable}
