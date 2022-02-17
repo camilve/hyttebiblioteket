@@ -257,6 +257,7 @@ const RepublishBook: React.FC<BookDetailPageProps> = ({ match }) => {
                       onIonBlur={handleBlur}
                       value={values.comment}
                       rows={5}
+                      autocapitalize="sentences"
                     />
                   </IonItem>
                   {!!errors.comment && touched.comment && (

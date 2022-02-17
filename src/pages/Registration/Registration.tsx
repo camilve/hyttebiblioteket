@@ -14,6 +14,7 @@ import {
 import logo from "../../images/logo.svg";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
+import Input from "../../components/Input";
 import { registerWithEmailAndPassword } from "../../db/index";
 import "./Registration.css";
 import { getErrorMessage } from "../../help-functions/error";
@@ -85,104 +86,68 @@ const Registration: React.FC = () => {
                 handleSubmit,
               }) => (
                 <Form>
-                  <IonItem
-                    className={
-                      !!errors.name && touched.name ? "error" : "noError"
-                    }
-                  >
-                    <IonInput
-                      name="name"
-                      placeholder="Navn"
-                      onIonChange={(e: any) => {
-                        handleChange(e);
-                        setErrorRegister("");
-                      }}
-                      required
-                      type="text"
-                      onIonBlur={handleBlur}
-                    ></IonInput>
-                  </IonItem>
-                  {!!errors.name && touched.name && (
-                    <IonText color="danger">
-                      <p className="caption">{errors.name}</p>
-                    </IonText>
-                  )}
-                  <IonItem
-                    className={
-                      !!errors.email && touched.email ? "error" : "noError"
-                    }
-                  >
-                    <IonInput
-                      name="email"
-                      onIonChange={(e: any) => {
-                        handleChange(e);
-                        setErrorRegister("");
-                      }}
-                      required
-                      type="email"
-                      onIonBlur={handleBlur}
-                      placeholder="E-post"
-                    ></IonInput>
-                  </IonItem>
-                  {!!errors.email && touched.email && (
-                    <IonText color="danger">
-                      <p className="caption">{errors.email}</p>
-                    </IonText>
-                  )}
-                  <IonItem
-                    className={
-                      !!errors.password && touched.password
-                        ? "error"
-                        : "noError"
-                    }
-                  >
-                    <IonInput
-                      placeholder="Passord"
-                      name="password"
-                      onIonChange={(e: any) => {
-                        handleChange(e);
-                        setErrorRegister("");
-                      }}
-                      required
-                      type="password"
-                      onIonBlur={handleBlur}
-                    ></IonInput>
-                  </IonItem>
-                  {!!errors.password && touched.password && (
-                    <IonText color="danger">
-                      <p className="caption">{errors.password}</p>
-                    </IonText>
-                  )}
-                  <IonItem
-                    className={
-                      !!errors.confirmPassword && touched.confirmPassword
-                        ? "error"
-                        : "noError"
-                    }
-                  >
-                    <IonInput
-                      name="confirmPassword"
-                      placeholder="Gjenta passord"
-                      onIonChange={(e: any) => {
-                        handleChange(e);
-                        setErrorRegister("");
-                      }}
-                      required
-                      type="password"
-                      onIonBlur={handleBlur}
-                      onKeyPress={(e: React.KeyboardEvent) => {
-                        if (e.key === "Enter") {
-                          if (values.email && values.password && values.name)
-                            handleSubmit();
-                        }
-                      }}
-                    ></IonInput>
-                  </IonItem>
-                  {!!errors.confirmPassword && touched.confirmPassword && (
-                    <IonText color="danger">
-                      <p className="caption">{errors.confirmPassword}</p>
-                    </IonText>
-                  )}
+                  <Input
+                    name="name"
+                    placeholder="Navn"
+                    handleChange={(e: any) => {
+                      handleChange(e);
+                    }}
+                    required
+                    handleBlur={handleBlur}
+                    errors={errors}
+                    touched={touched}
+                    values={values}
+                    autocapitalize="words"
+                  />
+                  <Input
+                    name="email"
+                    placeholder="E-post"
+                    handleChange={(e: any) => {
+                      handleChange(e);
+                      setErrorRegister("");
+                    }}
+                    required
+                    handleBlur={handleBlur}
+                    errors={errors}
+                    touched={touched}
+                    values={values}
+                    type="email"
+                    autocapitalize="none"
+                  />
+                  <Input
+                    handleChange={(e: any) => {
+                      handleChange(e);
+                      setErrorRegister("");
+                    }}
+                    required
+                    handleBlur={handleBlur}
+                    errors={errors}
+                    touched={touched}
+                    values={values}
+                    placeholder="Passord"
+                    name="password"
+                    type="password"
+                  />
+                  <Input
+                    name="confirmPassword"
+                    placeholder="Gjenta passord"
+                    handleChange={(e: any) => {
+                      handleChange(e);
+                      setErrorRegister("");
+                    }}
+                    errors={errors}
+                    touched={touched}
+                    values={values}
+                    required
+                    type="password"
+                    handleBlur={handleBlur}
+                    onKeyPress={(e: React.KeyboardEvent) => {
+                      if (e.key === "Enter") {
+                        if (values.email && values.password && values.name)
+                          handleSubmit();
+                      }
+                    }}
+                  />
                   <IonButton
                     expand="block"
                     color="primary"

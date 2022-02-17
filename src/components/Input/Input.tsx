@@ -1,5 +1,6 @@
 import React from "react";
 import { IonItem, IonInput, IonText, IonLabel } from "@ionic/react";
+import "./Input.css";
 
 interface InputProps {
   errors: { [field: string]: string };
@@ -12,6 +13,9 @@ interface InputProps {
   placeholder?: string;
   required?: boolean;
   label?: string;
+  autocapitalize?: string;
+  type?: any;
+  [x: string]: any;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -25,6 +29,9 @@ const Input: React.FC<InputProps> = ({
   placeholder = "",
   required = false,
   label = "",
+  autocapitalize = "sentences",
+  type = "text",
+  ...props
 }) => (
   <>
     <IonItem className={!!errors[name] && touched[name] ? "error" : "noError"}>
@@ -35,11 +42,13 @@ const Input: React.FC<InputProps> = ({
         onIonChange={(e: any) => {
           handleChange(e);
         }}
-        type="text"
         onIonBlur={handleBlur}
         disabled={disabled}
         required={required}
         value={values[name]}
+        autocapitalize={autocapitalize}
+        type={type}
+        {...props}
       ></IonInput>
     </IonItem>
     {!!errors[name] && touched[name] && (

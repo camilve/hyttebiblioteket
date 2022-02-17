@@ -111,6 +111,7 @@ const AddEditBookForm = ({
               required
               values={values}
               disabled={borrowed}
+              autocapitalize="words"
             />
             <Input
               name="published"
@@ -157,6 +158,7 @@ const AddEditBookForm = ({
                 onIonBlur={handleBlur}
                 value={values.comment}
                 rows={5}
+                autocapitalize="sentences"
               />
             </IonItem>
             {!!errors.comment && touched.comment && (
