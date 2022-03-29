@@ -37,7 +37,7 @@ const Header: React.FC<HeaderProps> = ({
 
   return (
     <IonHeader collapse="fade" id="header">
-      <IonToolbar color="primary" mode="md" id="navbar">
+      <IonToolbar mode="md" id="navbar">
         {back && (
           <IonButtons slot="start">
             <IonButton onClick={handleClick}>
@@ -50,7 +50,7 @@ const Header: React.FC<HeaderProps> = ({
         )}
         <IonTitle id="headerTitle">
           <div id="titleContentHeader">
-            {!back && <img src={logo} alt="Logo" id="logoHeader" />}
+            {!back && <div id="logoHeader" />}
             {loading ? (
               <IonSkeletonText className="headerTitleSkeleton" />
             ) : (

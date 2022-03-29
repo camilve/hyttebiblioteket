@@ -1,21 +1,16 @@
 .republishMapContainer {
-  height: 10rem;
+  height: 13rem;
   margin-bottom: 1rem;
 }
 
 .content {
-  padding: 1rem;
+  padding: 0 1rem 1rem 1rem;
 }
 
 .infoText {
   font-size: 13px !important;
   white-space: normal;
   color: #000 !important;
-}
-
-.divider {
-  margin: 1.5rem 0;
-  border-bottom: 1px solid lightgrey;
 }
 
 #toggleBorder {
@@ -26,4 +21,37 @@
 #trashContainer {
   display: flex;
   justify-content: flex-end;
+}
+
+.whitebackgroundcontent {
+  background-color: white;
+  margin: 0 -1rem 0rem -1rem;
+  padding: 1rem 1rem 1rem 1rem;
+}
+
+.whitebackgroundcontent .item {
+  --background: white;
+}
+
+.lastInput {
+  margin-bottom: 0 !important;
+}
+
+.deletebtn {
+  margin-top: 1rem;
+  width: 100%;
+  text-transform: none;
+}
+
+.btn {
+  text-transform: none;
+  width: 100%;
+}
+
+.ionContentIsh {
+  overflow-y: scroll;
+}
+
+#headerModal::after {
+  background-image: none;
 }

@@ -6,10 +6,13 @@ import {
   IonItem,
   IonSkeletonText,
   IonToast,
-  IonSelect,
-  IonSelectOption,
   IonRefresher,
   IonRefresherContent,
+  IonRange,
+  IonCard,
+  IonChip,
+  IonLabel,
+  isPlatform,
 } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -19,7 +22,6 @@ import { auth } from "../../db/index";
 import { BookType } from "../../types/book";
 import { LocationError } from "../../types/generalTypes";
 import "./Books.css";
-import { IonSegment, IonSegmentButton, IonLabel } from "@ionic/react";
 import { getLocationErrorMessage } from "../../help-functions/error";
 import { getDistanceFromLatLonInKm } from "../../help-functions/distance";
 import { Geolocation } from "@ionic-native/geolocation";
@@ -85,41 +87,53 @@ const Books: React.FC = () => {
 
   return (
     <IonContent fullscreen>
-      <IonToolbar color="primary" className="toolbarSegment">
-        <IonItem id="selectDistance">
-          <IonLabel>Avstand</IonLabel>
-          <IonSelect
-            value={distance}
-            okText="Velg"
-            cancelText="Avbryt"
-            onIonChange={(e) => {
-              setDistance(e.detail.value as number);
-              position && fetchBooks(position, e.detail.value as number);
-            }}
-          >
-            <IonSelectOption value={5}>5 km</IonSelectOption>
-            <IonSelectOption value={10}>10 km</IonSelectOption>
-            <IonSelectOption value={20}>20 km</IonSelectOption>
-            <IonSelectOption value={50}>50 km</IonSelectOption>
-          </IonSelect>
-        </IonItem>
+      <IonToolbar className="toolbarSegment">
+        <div id="rangeContainer">
+          <div id="rangelabel">
+            <IonLabel color="primary">
+              <b>Avstand</b>
+            </IonLabel>
+            <IonLabel>{distance} km</IonLabel>
+          </div>
+          <IonItem id="rangeItem">
+            <IonRange
+              value={distance}
+              max={25}
+              min={1}
+              onIonChange={(e) => {
+                setDistance(e.detail.value as number);
+                position && fetchBooks(position, e.detail.value as number);
+              }}
+            />
+          </IonItem>
+        </div>
       </IonToolbar>
-      <IonToolbar color="primary" className="toolbarSegment">
-        <IonSegment
-          onIonChange={(e: any) =>
-            dispatch(setSelectedTable("BOOKS", e.detail.value))
-          }
-          className="segment"
-          value={selectedTable}
-          mode="ios"
+      <IonToolbar className="toolbarSegment">
+        <IonChip
+          className="chip"
+          color={selectedTable === "0" ? "primary" : undefined}
+          onClick={() => dispatch(setSelectedTable("BOOKS", "0"))}
         >
-          <IonSegmentButton className="segmentButton" value="0">
-            <IonLabel>Liste</IonLabel>
-          </IonSegmentButton>
-          <IonSegmentButton className="segmentButton" value="1">
-            <IonLabel>Kart</IonLabel>
-          </IonSegmentButton>
-        </IonSegment>
+          <IonLabel
+            className="chipText"
+            color={selectedTable === "0" ? "primary" : undefined}
+          >
+            Liste
+          </IonLabel>
+        </IonChip>
+
+        <IonChip
+          className="chip"
+          color={selectedTable === "1" ? "primary" : undefined}
+          onClick={() => dispatch(setSelectedTable("BOOKS", "1"))}
+        >
+          <IonLabel
+            className="chipText"
+            color={selectedTable === "1" ? "primary" : undefined}
+          >
+            Kart
+          </IonLabel>
+        </IonChip>
       </IonToolbar>
       {selectedTable === "0" && (
         <>
@@ -135,33 +149,30 @@ const Books: React.FC = () => {
           >
             <IonRefresherContent></IonRefresherContent>
           </IonRefresher>
-          <IonList>
-            {!posLoading &&
-              !bookLoading && [
-                books.length === 0 && (
-                  <IonItem key="noAvailable">
-                    <IonLabel class="ion-text-wrap">
-                      Ingen tilgjengelige
-                      <p>{`${
-                        !position
-                          ? "Du må tillate posisjon for å finne bøker."
-                          : ""
-                      }`}</p>
-                    </IonLabel>
-                  </IonItem>
-                ),
-                books.map((book: BookType) => (
-                  <IonItem
-                    key={book.id}
-                    button
-                    onClick={() =>
-                      history.push(`/books/${book.id}-${book.title}`)
-                    }
-                    detail
-                  >
+          {!posLoading &&
+            !bookLoading && [
+              books.length === 0 && (
+                <IonItem key="noAvailable">
+                  <IonLabel class="ion-text-wrap">
+                    Ingen tilgjengelige
+                    <p>{`${
+                      !position
+                        ? "Du må tillate posisjon for å finne bøker."
+                        : ""
+                    }`}</p>
+                  </IonLabel>
+                </IonItem>
+              ),
+              books.map((book: BookType) => (
+                <IonCard
+                  key={book.id}
+                  button
+                  onClick={() =>
+                    history.push(`/books/${book.id}-${book.title}`)
+                  }
+                >
+                  <div className="bookCard">
                     <IonLabel>
-                      {book.title}
-                      <p>{`Av ${book.author}`}</p>
                       <p>
                         {`${
                           position &&
@@ -173,18 +184,28 @@ const Books: React.FC = () => {
                           )
                         } km`}
                       </p>
+                      <p id="bookTitle">{book.title}</p>
+                      <p>{`Av ${book.author}`}</p>
                     </IonLabel>
-                  </IonItem>
-                )),
-              ]}
-          </IonList>
+                  </div>
+                </IonCard>
+              )),
+            ]}
+          {/* </IonList> */}
         </>
       )}
       {selectedTable === "1" &&
         !posLoading &&
         !bookLoading && [
           position && (
-            <div className="mapContainerBooks" key="map">
+            <div
+              className={
+                isPlatform("ios")
+                  ? "mapContainerBooksIos"
+                  : "mapContainerBooksAndroid"
+              }
+              key="map"
+            >
               <Map
                 position={position}
                 books={books}

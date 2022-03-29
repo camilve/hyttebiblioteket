@@ -1,12 +1,14 @@
 import React from "react";
 import { IonItem, IonInput, IonText, IonLabel } from "@ionic/react";
 import "./Input.css";
+import clsx from "clsx";
 
 interface InputProps {
   errors: { [field: string]: string };
   touched: { [field: string]: boolean };
   values: { [field: string]: any };
   handleBlur: (e: any) => void;
+  className?: string;
   name: string;
   handleChange: (e: React.ChangeEvent<any>) => void;
   disabled?: boolean;
@@ -25,6 +27,7 @@ const Input: React.FC<InputProps> = ({
   errors,
   touched,
   values,
+  className = "",
   disabled = false,
   placeholder = "",
   required = false,
@@ -34,7 +37,12 @@ const Input: React.FC<InputProps> = ({
   ...props
 }) => (
   <>
-    <IonItem className={!!errors[name] && touched[name] ? "error" : "noError"}>
+    <IonItem
+      className={clsx(
+        !!errors[name] && touched[name] ? "error" : "noError",
+        className
+      )}
+    >
       {label && <IonLabel>{`${label}: `}</IonLabel>}
       <IonInput
         name={name}

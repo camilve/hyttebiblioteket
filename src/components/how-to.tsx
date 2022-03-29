@@ -8,10 +8,7 @@ import "./how-to.css";
 
 const HowTo = () => {
   return (
-    <IonGrid className="content">
-      <IonRow className="mt">
-        <h2 className="title">Hvordan fungerer det?</h2>
-      </IonRow>
+    <IonGrid className="howtocontent">
       <IonRow>
         <IonCol className="flex">
           <img src={registerImg} className="img" alt="Register" />

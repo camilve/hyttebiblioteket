@@ -15,6 +15,7 @@ export type BookType = {
   borrowedBy: string;
   ownerId: string;
   userId: string;
+  borrowedDate?: string;
 };
 
 export type KeyBookObjectType = {

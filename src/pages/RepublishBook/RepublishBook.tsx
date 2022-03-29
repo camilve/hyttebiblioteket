@@ -11,6 +11,7 @@ import { Formik, Form } from "formik";
 import Map from "../../components/Map";
 import { GeoPoint } from "firebase/firestore";
 import { geohashForLocation } from "geofire-common";
+import Modal from "./RepublishBookModal";
 import {
   IonContent,
   IonButton,
@@ -40,6 +41,7 @@ const RepublishBook: React.FC<BookDetailPageProps> = ({ match }) => {
   const [book, setBook] = useState<BookType | undefined>(undefined);
   const [bookLoading, setBookLoading] = useState<boolean>(false);
   const [posLoading, setPosLoading] = useState<boolean>(false);
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const [user, loading] = useAuthState(auth);
   const [owner, setOwner] = useState<UserType | undefined>(undefined);
   const [deleteAlert, setDeleteAlert] = useState<boolean>(false);
@@ -61,6 +63,9 @@ const RepublishBook: React.FC<BookDetailPageProps> = ({ match }) => {
       }
       fetchUser(_books);
       setBook(_books);
+      setPosition(
+        L.latLng(_books.position.latitude, _books.position.longitude)
+      );
       setBookLoading(false);
     }
   };
@@ -96,201 +101,108 @@ const RepublishBook: React.FC<BookDetailPageProps> = ({ match }) => {
         {book &&
           user &&
           position && [
-            book && book.ownership && book.ownerId !== user.uid ? (
-              <div key="content">
-                <p key="owner">
-                  <i>{`Boka tilhører ${owner?.name}`}</i>
-                </p>
-              </div>
-            ) : (
-              <div key="content" id="trashContainer">
-                <IonButton
-                  onClick={() => setDeleteAlert(true)}
-                  key="btn"
-                  fill="clear"
-                >
-                  <IonIcon slot="icon-only" icon={trash} />
-                </IonButton>
-                ,
-                <IonAlert
-                  key="alert"
-                  isOpen={deleteAlert}
-                  onDidDismiss={() => setDeleteAlert(false)}
-                  header={"Slett bok"}
-                  message={
-                    book.ownership && book.ownerId !== user.uid
-                      ? "Boka har eierskap og kan derfor ikke slettes."
-                      : "Er du sikker på at du vil slette boka?"
-                  }
-                  buttons={
-                    book.ownership && book.ownerId !== user.uid
-                      ? [
-                          {
-                            text: "Lukk",
-                            role: "cancel",
-                            cssClass: "secondary",
-                            id: "cancel-button",
-                            handler: () => {
-                              setDeleteAlert(false);
-                            },
-                          },
-                        ]
-                      : [
-                          {
-                            text: "Avbryt",
-                            role: "cancel",
-                            cssClass: "secondary",
-                            id: "cancel-button",
-                            handler: () => {
-                              setDeleteAlert(false);
-                            },
-                          },
-                          {
-                            text: "Slett",
-                            id: "delete-button",
-                            handler: () => {
-                              bookDB
-                                .deleteBook(book.id)
-                                .then(() => history.push("/my-books/1"));
-                            },
-                          },
-                        ]
-                  }
-                />
-              </div>
-            ),
-
-            <Formik
-              key="formik"
-              initialValues={{
-                latitude: position?.lat,
-                longitude: position?.lng,
-                comment: "",
-                geohash: book?.geohash || "",
-                ownership: book?.ownership || false,
-              }}
-              validationSchema={yup.object().shape({
-                comment: yup.string().required("Feltet er påkrevd"),
-              })}
-              onSubmit={(val) => {
-                console.log(val);
-                const values: BookType = {
-                  id: book.id,
-                  title: book.title,
-                  author: book.author,
-                  position: new GeoPoint(
-                    Number(val.latitude),
-                    Number(val.longitude)
-                  ),
-                  userId: book.ownerId,
-                  ownerId: book.ownership ? book.ownerId : book.borrowedBy,
-                  published: book.published,
-                  comment: val.comment,
-                  geohash: geohashForLocation([
-                    Number(val.latitude),
-                    Number(val.longitude),
-                  ]),
-                  ownership: val.ownership,
-                  borrowed: false,
-                  borrowedBy: book.ownership ? book.borrowedBy : "",
-                };
-                bookDB
-                  .updateBook(id, values)
-                  .then(() => {
-                    history.push("/my-books");
-                  })
-                  .catch((e) => console.error(e));
-              }}
-            >
-              {({
-                handleChange,
-                handleBlur,
-                setFieldValue,
-                values,
-                errors,
-                touched,
-              }) => (
-                <Form>
-                  <IonItem>
-                    <IonLabel>Tittel: </IonLabel>
-                    <IonInput value={book.title} disabled />
-                  </IonItem>
-                  <IonItem>
-                    <IonLabel>Forfatter: </IonLabel>
-                    <IonInput value={book.author} disabled />
-                  </IonItem>
-                  <IonItem>
-                    <IonLabel>Utgitt: </IonLabel>
-                    <IonInput value={book.published} disabled />
-                  </IonItem>
-                  <p className="divider" />
-                  <IonText color="primary">Her ligger boka</IonText>
-                  <p className="infoText">
-                    Klikk på kartet for å endre posisjon. Prøv å få punktet så
-                    nøyaktig som mulig.
+            <div key="bookinfo">
+              <IonText color="tertiary">
+                <p className="bookTitle">{book.title}</p>
+              </IonText>
+              <div className="card">
+                <IonText>
+                  <p className="bookInfo">
+                    <strong>Forfatter:</strong> {book.author}
                   </p>
-                  <div className="republishMapContainer">
-                    <Map
-                      position={position}
-                      clickable
-                      setPosition={(pos) => {
-                        setFieldValue("latitude", pos.lat);
-                        setFieldValue("longitude", pos.lng);
-                        setPosition(pos);
-                      }}
-                    />
-                  </div>
-                  <IonText color="primary">Kommentar</IonText>
-                  <p />
-                  <IonItem
-                    className={
-                      !!errors.comment && touched.comment ? "error" : "noError"
-                    }
-                  >
-                    <IonTextarea
-                      name="comment"
-                      onIonChange={(e: any) => {
-                        handleChange(e);
-                      }}
-                      required
-                      placeholder="Gi en beskrivelse hvor boka ligger."
-                      onIonBlur={handleBlur}
-                      value={values.comment}
-                      rows={5}
-                      autocapitalize="sentences"
-                    />
-                  </IonItem>
-                  {!!errors.comment && touched.comment && (
-                    <IonText color="danger">
-                      <p className="caption">{errors.comment}</p>
-                    </IonText>
-                  )}
-                  {book.ownerId === user.uid && [
-                    <p className="divider" key="divider" />,
-                    <IonItem key="toggle" id="toggleBorder">
-                      <IonLabel color="primary">
-                        Eierskap til boka
-                        <p className="infoText" key="infotext">
-                          Hvis du ønsker å se hvem som har boka til enhver tid,
-                          slik at du lettere kan få den tilbake.
-                        </p>
-                      </IonLabel>
-                      <IonToggle
-                        checked={values.ownership}
-                        onIonChange={(e) =>
-                          setFieldValue("ownership", e.detail.checked)
-                        }
-                        name="ownership"
-                      />
-                    </IonItem>,
-                  ]}
-                  <IonButton expand="block" type="submit" color="primary">
-                    <IonIcon slot="end" icon={checkmark} />
-                    Legg ut boka på nytt
-                  </IonButton>
-                </Form>
+                  <p className="bookInfo">
+                    <strong>Utgitt:</strong> {book.published}
+                  </p>
+                </IonText>
+                {book && book.ownership && book.ownerId !== user.uid && (
+                  <p className="bookInfo">
+                    <i>{`Boka tilhører ${owner?.name}`}</i>
+                  </p>
+                )}
+              </div>
+              <br />
+              <div className="card">
+                <IonText color="primary">Lokasjon</IonText>
+                <div className="mapContainerBook">
+                  <Map
+                    position={position}
+                    key="mapPublish"
+                    center={L.latLng(
+                      book.position.latitude,
+                      book.position.longitude
+                    )}
+                    books={[book]}
+                  />
+                </div>
+                <br />
+                <IonText>
+                  <p className="bookInfo" style={{ marginBottom: "0.5rem" }}>
+                    <strong>Kommentar:</strong>
+                  </p>
+                  <p className="bookInfo" style={{ marginTop: 0 }}>
+                    {book.comment}
+                  </p>
+                </IonText>
+              </div>
+              <br />
+
+              {user && (
+                <IonButton
+                  color="primary"
+                  expand="block"
+                  fill="solid"
+                  className="btn"
+                  onClick={() => {
+                    setOpenModal(true);
+                  }}
+                >
+                  Legg ut bok på nytt
+                </IonButton>
               )}
-            </Formik>,
+            </div>,
+            <Modal
+              closemodal={() => setOpenModal(false)}
+              open={openModal}
+              key="modal"
+              book={book}
+              pos={position}
+            />,
+            !(book && book.ownership && book.ownerId !== user.uid) && (
+              <IonButton
+                onClick={() => setDeleteAlert(true)}
+                key="btn"
+                fill="clear"
+                className="deletebtn"
+              >
+                Slett
+              </IonButton>
+            ),
+            <IonAlert
+              key="alert"
+              isOpen={deleteAlert}
+              onDidDismiss={() => setDeleteAlert(false)}
+              header={"Slett bok"}
+              message={"Er du sikker på at du vil slette boka?"}
+              buttons={[
+                {
+                  text: "Avbryt",
+                  role: "cancel",
+                  id: "cancel-button",
+                  handler: () => {
+                    setDeleteAlert(false);
+                  },
+                },
+                {
+                  text: "Slett",
+                  id: "delete-button",
+                  handler: () => {
+                    bookDB
+                      .deleteBook(book.id)
+                      .then(() => history.push("/my-books/1"));
+                  },
+                },
+              ]}
+            />,
           ]}
         {(bookLoading || posLoading || loading) && <IonSkeletonText />}
       </div>

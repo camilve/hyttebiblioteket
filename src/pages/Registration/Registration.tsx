@@ -152,6 +152,7 @@ const Registration: React.FC = () => {
                     expand="block"
                     color="primary"
                     fill="solid"
+                    className="btn"
                     onClick={() => handleSubmit()}
                   >
                     Registrer

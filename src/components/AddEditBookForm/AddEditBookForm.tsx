@@ -13,10 +13,8 @@ import {
   IonItem,
   IonToggle,
   IonLabel,
-  IonIcon,
   IonTextarea,
 } from "@ionic/react";
-import { checkmark } from "ionicons/icons";
 
 type AddEditProps = {
   edit?: boolean;
@@ -53,6 +51,7 @@ const AddEditBookForm = ({
         ownership: book?.ownership || false,
         borrowed: book?.borrowed || false,
         borrowedBy: book?.borrowedBy || "",
+        borrowedDate: book?.borrowedDate,
       }}
       validationSchema={yup.object().shape({
         title: yup.string().required("Feltet er påkrevd"),
@@ -76,6 +75,7 @@ const AddEditBookForm = ({
           ownership: val.ownership,
           borrowed: val.borrowed,
           borrowedBy: val.borrowedBy,
+          borrowedDate: val.borrowedDate,
         };
         onSubmit(values);
       }}
@@ -90,111 +90,122 @@ const AddEditBookForm = ({
       }) => {
         return (
           <Form>
-            <Input
-              name="title"
-              label="Tittel"
-              handleBlur={handleBlur}
-              errors={errors}
-              touched={touched}
-              handleChange={handleChange}
-              required
-              values={values}
-              disabled={borrowed}
-            />
-            <Input
-              name="author"
-              label="Forfatter"
-              handleBlur={handleBlur}
-              errors={errors}
-              touched={touched}
-              handleChange={handleChange}
-              required
-              values={values}
-              disabled={borrowed}
-              autocapitalize="words"
-            />
-            <Input
-              name="published"
-              label="Utgitt (år)"
-              handleBlur={handleBlur}
-              errors={errors}
-              touched={touched}
-              handleChange={handleChange}
-              required
-              values={values}
-              disabled={borrowed}
-            />
-            <p className="divider" />
-            <IonText color="primary">Her ligger boka</IonText>
-            <p className="infoText">
-              Klikk på kartet for å endre posisjon. Prøv å få punktet så
-              nøyaktig som mulig.
-            </p>
-            <div className="republishMapContainer">
-              <Map
-                position={position}
-                clickable={!borrowed}
-                setPosition={(pos) => {
-                  setFieldValue("latitude", pos.lat);
-                  setFieldValue("longitude", pos.lng);
-                  setPosition(pos);
-                }}
+            <div className="whitebackgroundcontent">
+              <Input
+                name="title"
+                label="Tittel"
+                handleBlur={handleBlur}
+                errors={errors}
+                touched={touched}
+                handleChange={handleChange}
+                required
+                values={values}
+                disabled={borrowed}
+              />
+              <Input
+                name="author"
+                label="Forfatter"
+                handleBlur={handleBlur}
+                errors={errors}
+                touched={touched}
+                handleChange={handleChange}
+                required
+                values={values}
+                disabled={borrowed}
+                autocapitalize="words"
+              />
+              <Input
+                name="published"
+                label="Utgitt (år)"
+                handleBlur={handleBlur}
+                errors={errors}
+                touched={touched}
+                handleChange={handleChange}
+                required
+                values={values}
+                disabled={borrowed}
+                className="lastInput"
               />
             </div>
-            <IonText color="primary">Kommentar</IonText>
-            <IonItem
-              className={
-                !!errors.comment && touched.comment ? "error" : "noError"
-              }
-            >
-              <IonTextarea
-                name="comment"
-                onIonChange={(e: any) => {
-                  handleChange(e);
-                }}
-                required
-                disabled={borrowed}
-                placeholder="Gi en beskrivelse hvor boka ligger."
-                onIonBlur={handleBlur}
-                value={values.comment}
-                rows={5}
-                autocapitalize="sentences"
-              />
-            </IonItem>
-            {!!errors.comment && touched.comment && (
-              <IonText color="danger">
-                <p className="caption">{errors.comment}</p>
-              </IonText>
-            )}
+            <br />
+            <div className="whitebackgroundcontent">
+              <IonText color="primary">Her ligger boka</IonText>
+              <p className="infoText">
+                Klikk på kartet for å endre posisjon. Prøv å få punktet så
+                nøyaktig som mulig.
+              </p>
+
+              <div className="republishMapContainer">
+                <Map
+                  position={position}
+                  clickable={!borrowed}
+                  markerSelf
+                  setPosition={(pos) => {
+                    setFieldValue("latitude", pos.lat);
+                    setFieldValue("longitude", pos.lng);
+                    setPosition(pos);
+                  }}
+                />
+              </div>
+              <IonText color="primary">Kommentar</IonText>
+              <IonItem
+                className={
+                  !!errors.comment && touched.comment ? "error" : "noError"
+                }
+              >
+                <IonTextarea
+                  name="comment"
+                  onIonChange={(e: any) => {
+                    handleChange(e);
+                  }}
+                  required
+                  disabled={borrowed}
+                  placeholder="Gi en beskrivelse hvor boka ligger."
+                  onIonBlur={handleBlur}
+                  value={values.comment}
+                  rows={5}
+                  autocapitalize="sentences"
+                />
+              </IonItem>
+              {!!errors.comment && touched.comment && (
+                <IonText color="danger">
+                  <p className="caption">{errors.comment}</p>
+                </IonText>
+              )}
+            </div>
             {values.ownerId === userId && (
               <>
-                <p className="divider" />
-                <IonItem key="toggle" id="toggleBorder">
-                  <IonLabel color="primary">
-                    Eierskap til boka
-                    <p className="infoText" key="infotext">
-                      Hvis du ønsker å se hvem som har boka til enhver tid, slik
-                      at du lettere kan få den tilbake.
-                    </p>
-                  </IonLabel>
-                  <IonToggle
-                    checked={values.ownership}
-                    onIonChange={(e) =>
-                      setFieldValue("ownership", e.detail.checked)
-                    }
-                    name="ownership"
-                  />
-                </IonItem>
+                <br />
+                <div className="whitebackgroundcontent">
+                  <p className="divider" />
+                  <IonItem key="toggle" id="toggleBorder">
+                    <IonLabel color="primary">
+                      Eierskap til boka
+                      <p className="infoText" key="infotext">
+                        Hvis du ønsker å se hvem som har boka til enhver tid,
+                        slik at du lettere kan få den tilbake.
+                      </p>
+                    </IonLabel>
+                    <IonToggle
+                      checked={values.ownership}
+                      onIonChange={(e) =>
+                        setFieldValue("ownership", e.detail.checked)
+                      }
+                      name="ownership"
+                    />
+                  </IonItem>
+                </div>
               </>
             )}
+            <br />
             <IonButton
               type="submit"
               expand="block"
               fill="solid"
               color="primary"
+              className="btn"
             >
-              <IonIcon slot="end" icon={checkmark} />
-              {edit ? "Rediger" : "Legg ut"}
+              {edit ? "Lagre" : "Legg ut"}
             </IonButton>
           </Form>
         );

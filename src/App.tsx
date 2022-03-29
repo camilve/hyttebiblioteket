@@ -17,13 +17,15 @@ import { IonReactRouter } from "@ionic/react-router";
 import {
   home,
   library,
-  list,
+  addCircle,
   logIn,
   personAdd,
   informationCircle,
+  location,
 } from "ionicons/icons";
 import MyBooks from "./pages/MyBooks";
 import Books from "./pages/Books";
+import Borrowed from "./pages/Borrowed";
 import Home from "./pages/Home";
 import LoginScreen from "./pages/LoginScreen";
 import RegistrationScreen from "./pages/Registration";
@@ -95,18 +97,23 @@ const routes: BreadCrumbType = {
   },
   "/books/:id-:title": {
     component: BookScreen,
-    header: (match) => match.title || "",
+    header: () => "" /* (match) => match.title || */,
+    back: true,
+  },
+  "/borrowed": {
+    component: Borrowed,
+    header: () => "Lånte bøker",
+    back: false,
+  },
+  "/borrowed/:id": {
+    component: RepublishBook,
+    header: () => "Lånt bok",
     back: true,
   },
   "/my-books": {
     component: MyBooks,
     header: () => "Mine bøker",
     back: false,
-  },
-  "/my-books/republish-:id": {
-    component: RepublishBook,
-    header: () => "Legg ut bok på nytt",
-    back: true,
   },
   "/my-books/add": {
     component: AddBook,
@@ -136,20 +143,24 @@ const PublicRoutes = () => (
       <IonRouterOutlet>
         <IonPage>
           <Switch>
-            {Object.keys(routes).map((path) => (
-              <Route
-                key={path}
-                path={path}
-                exact
-                component={() => (
-                  <Header
-                    title={(params) => routes[path].header(params)}
-                    key="header"
-                    back={routes[path].back || false}
+            {Object.keys(routes).map((path) => {
+              if (path !== "/home") {
+                return (
+                  <Route
+                    key={path}
+                    path={path}
+                    exact
+                    component={() => (
+                      <Header
+                        title={(params) => routes[path].header(params)}
+                        key="header"
+                        back={routes[path].back || false}
+                      />
+                    )}
                   />
-                )}
-              />
-            ))}
+                );
+              }
+            })}
           </Switch>
           <Switch>
             {Object.keys(routes).map((path) => (
@@ -161,28 +172,25 @@ const PublicRoutes = () => (
               />
             ))}
             <Redirect to="/home" />
-            {/*     <Route exact path="/books" component={Books} />
-            <Route exact path="/books/:id-:title" component={BookScreen} />
-            <Route exact path="/my-books" component={MyBooks} />
-            <Route exact path="/my-books/republish-:id" component={RepublishBook} />
-            <Route exact path="/my-books/:page?" component={MyBooks} />
-            <Route path="/home" component={Home} />
-            <Redirect to="/home" /> */}
           </Switch>
         </IonPage>
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="books" href="/books">
+          <IonIcon icon={location} />
+          <IonLabel color="dark">Finn bok</IonLabel>
+        </IonTabButton>
+        <IonTabButton tab="borrowed" href="/borrowed">
           <IonIcon icon={library} />
-          <IonLabel>Finn bok</IonLabel>
+          <IonLabel color="dark">Lånte bøker</IonLabel>
         </IonTabButton>
         <IonTabButton tab="my-books" href="/my-books">
-          <IonIcon icon={list} />
-          <IonLabel>Mine bøker</IonLabel>
+          <IonIcon icon={addCircle} />
+          <IonLabel color="dark">Lagt ut</IonLabel>
         </IonTabButton>
         <IonTabButton tab="home" href="/home">
           <IonIcon icon={home} />
-          <IonLabel>Hjem</IonLabel>
+          <IonLabel color="dark">Hjem</IonLabel>
         </IonTabButton>
       </IonTabBar>
     </IonTabs>

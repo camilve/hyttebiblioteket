@@ -173,6 +173,21 @@ export const myBorrowedBooks = async (
       });
     });
     // return and convert back it array of todo
+    const sortedData = (data as Array<BookType>).sort(
+      (a: BookType, b: BookType) => {
+        return (
+          new Date(
+            b.borrowedDate ||
+              "Mon Mar 21 2022 12:01:06 GMT+0200 (sentraleuropeisk sommertid)"
+          ).valueOf() -
+          new Date(
+            a.borrowedDate ||
+              "Mon Mar 21 2022 12:01:06 GMT+0200 (sentraleuropeisk sommertid)"
+          ).valueOf()
+        );
+      }
+    );
+
     return data as Array<BookType>;
   } catch (err: any) {
     console.log(err.code);
@@ -227,6 +242,7 @@ export const updateBook = async (
     borrowed: newBook.borrowed,
     borrowedBy: newBook.borrowedBy,
     ownerId: newBook.ownerId,
+    borrowedDate: newBook.borrowedDate,
   });
 
   return batch.commit();

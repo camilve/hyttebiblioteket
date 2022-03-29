@@ -1,16 +1,29 @@
 .bookContainer {
-  padding: 1rem;
+  padding: 0 1rem 1rem 1rem;
 }
 
 .bookTitle {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  margin-top: 0;
 }
 
 .bookInfo {
-  font-size: 1rem;
+  font-size: 0.875rem;
 }
 
 .mapContainerBook {
-  height: 12rem;
+  height: 15rem;
   margin-top: 0.5rem;
+}
+
+.btn {
+  width: 100%;
+  text-transform: none;
+}
+
+.card {
+  margin: 0 -1rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--ion-card-background);
+  /* border: 1px solid lightgray; */
 }

@@ -4,14 +4,54 @@
 }
 
 .toolbarSegment {
-  padding: 0.5rem;
+  padding: 0.5rem 0.5rem 0 0.5rem;
   background-color: var(--ion-color-primary, #52796f);
 }
 
-.mapContainerBooks {
-  height: calc(100% - 144px);
+.mapContainerBooksAndroid {
+  height: calc(100% - 149px);
+}
+.mapContainerBooksIos {
+  height: calc(100% - 145px);
 }
 
-#selectDistance {
+#rangeContainer {
+  padding: 0 1rem 0 1rem;
   width: 100%;
+}
+#rangeContainer .ios .in-item {
+  padding-inline: 0;
+}
+
+#rangelabel {
+  display: flex;
+  justify-content: space-between;
+}
+
+.alert-radio-group.sc-ion-alert-md {
+  border-bottom: none;
+  border-top: none;
+}
+
+.bookCard {
+  padding: 1rem;
+}
+
+#bookTitle {
+  font-size: 1.1rem;
+  color: var(--ion-default-text, #000);
+}
+
+.chip {
+  width: 47%;
+}
+
+.chipText {
+  width: 100%;
+  text-align: center;
+}
+
+#rangeItem {
+  --inner-border-width: 0;
+  --border-width: 0;
 }

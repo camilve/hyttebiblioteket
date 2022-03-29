@@ -11,6 +11,8 @@
 }
 .book-icon {
   background: #f5f9f2 !important;
+  box-shadow: 0px 0px 10px black;
+  border-radius: 50%;
 }
 .book-icon::after {
   display: flex;
@@ -25,13 +27,16 @@
 .center-icon {
   background: blue !important;
   border: 2px solid lightblue;
-}
-.leaflet-marker-icon {
-  background: radial-gradient(#800080 0%, #800080 60%, #80008059 100%);
-  border-radius: 50%;
   box-shadow: 0px 0px 10px black;
+  border-radius: 50%;
 }
-.leaflet-marker-icon p {
+.manyBooks {
+  background: radial-gradient(#800080 0%, #800080 60%, #80008059 100%);
+  box-shadow: 0px 0px 10px black;
+  border-radius: 50%;
+}
+
+.manyBooks p {
   display: flex;
   justify-content: center;
   align-items: center;

@@ -38,3 +38,50 @@ ion-item.item-has-focus > ion-label {
   /* transform: translateY(-50%); */
   background-color: #52796f;
 }
+
+.homeContainer {
+  padding: 1rem;
+}
+
+.homecontent {
+  background: var(--background);
+  border-radius: 1.5rem 1.5rem 0 0;
+  padding: 1rem;
+  min-height: calc(100% - 8.5rem);
+}
+
+.homecard {
+  padding: 0.5rem;
+}
+
+.homecarditem {
+  --background: transparent;
+  --inner-border-width: 0;
+}
+
+#profileRounding {
+  border-radius: 50%;
+  background-color: #f5f5f5;
+  width: 4.5rem;
+  height: 4.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  border-color: #ffffff;
+  border-width: 0.3rem;
+  border-style: solid;
+}
+
+#profilerounddiv {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+#emailText {
+  background: var(--ion-card-background);
+  padding: 0.5rem 0.8rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+}

@@ -1,0 +1,8 @@
+.bookCard {
+  padding: 1rem;
+}
+
+#bookTitle {
+  font-size: 1.1rem;
+  color: var(--ion-default-text, #000);
+}

@@ -16,6 +16,7 @@ import {
 import { chevronForward } from "ionicons/icons";
 import { distanceBetween } from "geofire-common";
 import "./Map.css";
+import icon from "leaflet/dist/images/marker-icon.png";
 
 interface MapProps {
   position?: LatLng;
@@ -26,6 +27,7 @@ interface MapProps {
   setPosition?: (pos: LatLng) => void;
   distanceCircle?: number | null;
   clickableBooks?: boolean;
+  markerSelf?: boolean;
 }
 
 const bookIcon: L.DivIcon = new L.DivIcon({
@@ -44,6 +46,7 @@ const Map = ({
   setPosition = undefined,
   distanceCircle = null,
   clickableBooks = false,
+  markerSelf = false,
 }: MapProps) => {
   const history = useHistory();
   const [bookList, setBookList] = useState<KeyBookObjectType>({});
@@ -58,7 +61,6 @@ const Map = ({
   function MyComponent() {
     useMapEvents({
       click(e) {
-        console.log(e);
         setPos(e.latlng);
         setPosition && setPosition(e.latlng);
       },
@@ -130,12 +132,19 @@ const Map = ({
           <Marker
             position={pos}
             icon={
-              new L.DivIcon({
-                className: "center-icon",
-                iconSize: [16, 16],
-                iconAnchor: [8, 8],
-                popupAnchor: [0, -8],
-              })
+              !markerSelf
+                ? new L.DivIcon({
+                    className: "center-icon",
+                    iconSize: [16, 16],
+                    iconAnchor: [8, 8],
+                    popupAnchor: [0, -8],
+                  })
+                : L.icon({
+                    iconUrl: icon,
+                    iconSize: [25, 41],
+                    iconAnchor: [12.5, 40],
+                    popupAnchor: [0, -8],
+                  })
             }
             interactive={false}
           />
@@ -158,6 +167,7 @@ const Map = ({
                 bookList[key].books.length > 1
                   ? new L.DivIcon({
                       html: `<p>${bookList[key].books.length}</p>`,
+                      className: "manyBooks",
                       iconSize: [30, 30],
                       iconAnchor: [15, 15],
                       popupAnchor: [0, -15],

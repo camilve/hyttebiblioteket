@@ -1,0 +1,11 @@
+.deletebtn {
+  width: 100%;
+  text-transform: none;
+  margin-top: 1rem;
+}
+
+.bookInfoText {
+  font-size: 0.875rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}

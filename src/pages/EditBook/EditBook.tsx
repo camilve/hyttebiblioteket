@@ -8,15 +8,9 @@ import AddEditBookForm from "../../components/AddEditBookForm";
 import { auth } from "../../db/index";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useHistory, RouteComponentProps } from "react-router-dom";
-import {
-  IonContent,
-  IonSkeletonText,
-  IonButton,
-  IonAlert,
-  IonIcon,
-  IonText,
-} from "@ionic/react";
+import { IonContent, IonSkeletonText, IonButton, IonAlert } from "@ionic/react";
 import { trash } from "ionicons/icons";
+import "./EditBook.css";
 
 interface BookDetailPageProps
   extends RouteComponentProps<{
@@ -65,94 +59,28 @@ const EditBook: React.FC<BookDetailPageProps> = ({ match }) => {
   return (
     <IonContent>
       <div className="content">
-        {book && user && !(book.ownership && book.ownerId !== user.uid) && (
-          <div key="content" id="trashContainer">
-            <IonButton
-              onClick={() => setDeleteAlert(true)}
-              key="btn"
-              fill="clear"
-            >
-              <IonIcon slot="icon-only" icon={trash} />
-            </IonButton>
-            <IonAlert
-              key="alert"
-              isOpen={deleteAlert}
-              onDidDismiss={() => setDeleteAlert(false)}
-              header={"Slett bok"}
-              message={
-                book.ownership && book.ownerId !== user.uid
-                  ? "Boka har eierskap og kan derfor ikke slettes."
-                  : "Er du sikker på at du vil slette boka?"
-              }
-              buttons={
-                book.ownership && book.ownerId !== user.uid
-                  ? [
-                      {
-                        text: "Lukk",
-                        role: "cancel",
-                        cssClass: "secondary",
-                        id: "cancel-button",
-                        handler: () => {
-                          setDeleteAlert(false);
-                        },
-                      },
-                    ]
-                  : [
-                      {
-                        text: "Avbryt",
-                        role: "cancel",
-                        cssClass: "secondary",
-                        id: "cancel-button",
-                        handler: () => {
-                          setDeleteAlert(false);
-                        },
-                      },
-                      {
-                        text: "Slett",
-                        id: "delete-button",
-                        handler: () => {
-                          bookDB
-                            .deleteBook(book.id)
-                            .then(() => history.push("/my-books"));
-                        },
-                      },
-                    ]
-              }
-            />
-          </div>
-        )}
-
         {borrower && user && (
           <>
             {book?.borrowed ? (
-              <>
-                <IonText>
-                  <i>
-                    {`Boka er lånt ut til ${borrower.name}.`}
-                    <p>{`Hvis du ikke lenger ønsker eierskap for boka kan du endre dette når som helst.`}</p>
-                  </i>
-                </IonText>
-              </>
+              <p className="bookInfoText">
+                <i>
+                  {`Boka er lånt ut til ${borrower.name}.
+                    Hvis du ikke lenger ønsker eierskap for boka kan du endre dette når som helst.`}
+                </i>
+              </p>
             ) : (
               <>
                 {book?.borrowedBy === user.uid ? (
-                  <>
-                    <IonText>
-                      <i>
-                        {`Du la ut boka sist.`}
-                        <p>{`Boka tilhører ${owner?.name}.`}</p>
-                      </i>
-                    </IonText>
-                  </>
+                  <p className="bookInfoText">
+                    <i>{`Du la ut boka sist. Boka tilhører ${owner?.name}.`}</i>
+                  </p>
                 ) : (
-                  <>
-                    <IonText>
-                      <i>
-                        {`Boka ble sist lagt ut av ${borrower.name}.`}
-                        <p>{`Hvis du ikke lenger ønsker oversikt over boka, kan du endre dette når som helst.`}</p>
-                      </i>
-                    </IonText>
-                  </>
+                  <p className="bookInfoText">
+                    <i>
+                      {`Boka ble sist lagt ut av ${borrower.name}. 
+                      Hvis du ikke lenger ønsker oversikt over boka, kan du endre dette når som helst.`}
+                    </i>
+                  </p>
                 )}
               </>
             )}
@@ -160,27 +88,69 @@ const EditBook: React.FC<BookDetailPageProps> = ({ match }) => {
         )}
         {(bookLoading || loading) && <IonSkeletonText />}
 
-        {book && user && (
-          <AddEditBookForm
-            edit
-            borrowed={book.borrowed && book.borrowedBy !== user.uid}
-            book={book}
-            position={L.latLng(book.position.latitude, book.position.longitude)}
-            userId={user?.uid}
-            onSubmit={(val) => {
-              if (val.borrowed && val.borrowedBy && !val.ownership) {
-                val.ownerId = val.borrowedBy;
-              }
-              bookDB
-                .updateBook(id, val)
-                .then(() => {
-                  history.push("/my-books");
-                })
-                .catch((e) => console.error(e));
-            }}
-            handleClose={() => history.push("/my-books")}
-          />
-        )}
+        {book &&
+          user && [
+            <AddEditBookForm
+              edit
+              borrowed={book.borrowed && book.borrowedBy !== user.uid}
+              book={book}
+              position={L.latLng(
+                book.position.latitude,
+                book.position.longitude
+              )}
+              userId={user?.uid}
+              onSubmit={(val) => {
+                if (val.borrowed && val.borrowedBy && !val.ownership) {
+                  val.ownerId = val.borrowedBy;
+                }
+                bookDB
+                  .updateBook(id, val)
+                  .then(() => {
+                    history.push("/my-books");
+                  })
+                  .catch((e) => console.error(e));
+              }}
+              handleClose={() => history.push("/my-books")}
+            />,
+            !(book.ownership && book.ownerId !== user.uid) && (
+              <div key="content" id="trashContainer">
+                <IonButton
+                  onClick={() => setDeleteAlert(true)}
+                  key="btn"
+                  fill="clear"
+                  className="deletebtn"
+                >
+                  Slett
+                </IonButton>
+                <IonAlert
+                  key="alert"
+                  isOpen={deleteAlert}
+                  onDidDismiss={() => setDeleteAlert(false)}
+                  header={"Slett bok"}
+                  message={"Er du sikker på at du vil slette boka?"}
+                  buttons={[
+                    {
+                      text: "Avbryt",
+                      role: "cancel",
+                      id: "cancel-button",
+                      handler: () => {
+                        setDeleteAlert(false);
+                      },
+                    },
+                    {
+                      text: "Slett",
+                      id: "delete-button",
+                      handler: () => {
+                        bookDB
+                          .deleteBook(book.id)
+                          .then(() => history.push("/my-books"));
+                      },
+                    },
+                  ]}
+                />
+              </div>
+            ),
+          ]}
       </div>
     </IonContent>
   );

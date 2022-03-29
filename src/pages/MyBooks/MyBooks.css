@@ -12,3 +12,20 @@
   display: flex !important;
   align-items: center;
 }
+
+#fabbutton {
+  bottom: 1rem;
+  width: 10rem;
+  margin-left: calc((100vw - 10rem) / 2);
+  --border-radius: 2rem;
+  text-transform: none;
+}
+
+.bookCard {
+  padding: 1rem;
+}
+
+#bookTitle {
+  font-size: 1.1rem;
+  color: var(--ion-default-text, #000);
+}

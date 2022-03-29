@@ -69,6 +69,7 @@ const LoginScreen: React.FC = () => {
             <IonButton
               color="secondary"
               fill="solid"
+              className="btn"
               onClick={() => history.push("/register")}
             >
               Registrer
@@ -103,6 +104,7 @@ const LoginScreen: React.FC = () => {
               expand="block"
               color="primary"
               fill="solid"
+              className="btn"
               onClick={() => {
                 if (email && password) signIn();
               }}
@@ -115,6 +117,7 @@ const LoginScreen: React.FC = () => {
             <IonButton
               fill="clear"
               color="dark"
+              className="btn"
               onClick={() => setForgottenPassword(true)}
             >
               Glemt passord
