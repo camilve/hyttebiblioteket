@@ -41,6 +41,7 @@ ion-item.item-has-focus > ion-label {
 
 .homeContainer {
   padding: 1rem;
+  margin-bottom: 2rem;
 }
 
 .homecontent {
@@ -62,12 +63,13 @@ ion-item.item-has-focus > ion-label {
 #profileRounding {
   border-radius: 50%;
   background-color: #f5f5f5;
-  width: 4.5rem;
-  height: 4.5rem;
+  width: 5.5rem;
+  height: 5.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1.2rem;
+  font-weight: bold;
   border-color: #ffffff;
   border-width: 0.3rem;
   border-style: solid;
