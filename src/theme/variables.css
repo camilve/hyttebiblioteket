@@ -80,6 +80,7 @@ http://ionicframework.com/docs/theming/ */
   --ion-tab-bar-background: #ffffff;
 
   --ion-default-text: #000000;
+  --ion-text-color: #000000;
 }
 /*
    * Dark Colors
@@ -94,12 +95,12 @@ body.dark {
   --ion-color-primary-shade: #a4b1ad;
   --ion-color-primary-tint: #c1cecb;
 
-  --ion-color-secondary: #50c8ff;
-  --ion-color-secondary-rgb: 80, 200, 255;
-  --ion-color-secondary-contrast: #ffffff;
-  --ion-color-secondary-contrast-rgb: 255, 255, 255;
-  --ion-color-secondary-shade: #46b0e0;
-  --ion-color-secondary-tint: #62ceff;
+  --ion-color-secondary: #84a98c;
+  --ion-color-secondary-rgb: 144, 178, 152;
+  --ion-color-secondary-contrast: #000;
+  --ion-color-secondary-contrast-rgb: 0, 0, 0;
+  --ion-color-secondary-shade: #74957b;
+  --ion-color-secondary-tint: #90b298;
 
   --ion-color-tertiary: #6a64ff;
   --ion-color-tertiary-rgb: 106, 100, 255;
@@ -232,7 +233,7 @@ body.dark {
 
   --ion-item-background: #1e1e1e;
 
-  --ion-toolbar-background: #1f1f1f;
+  --ion-toolbar-background: #121212;
 
   --ion-tab-bar-background: #1f1f1f;
 

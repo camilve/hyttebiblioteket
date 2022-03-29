@@ -97,7 +97,7 @@ const Book: React.FC<BookDetailPageProps> = ({ match }) => {
       <div className="bookContainer">
         {book && position && (
           <>
-            <IonText color="tertiary">
+            <IonText color="primary">
               <p className="bookTitle">{book.title}</p>
             </IonText>
             <div className="card">
@@ -175,7 +175,7 @@ const Book: React.FC<BookDetailPageProps> = ({ match }) => {
         )}
         {(bookLoading || posLoading || loading) && (
           <>
-            <IonText color="tertiary">
+            <IonText>
               <p>
                 <IonSkeletonText animated style={{ width: "88%" }} />
               </p>

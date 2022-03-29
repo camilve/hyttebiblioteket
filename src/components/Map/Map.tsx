@@ -183,8 +183,8 @@ const Map = ({
                       <p>{`${b.title} av ${b.author}`}</p>
 
                       <IonButton
-                        fill="outline"
                         color="primary"
+                        style={{ textTransform: "none" }}
                         onClick={() =>
                           history.push(`/books/${b.id}-${b.title}`)
                         }

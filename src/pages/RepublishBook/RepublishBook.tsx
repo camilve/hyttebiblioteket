@@ -102,7 +102,7 @@ const RepublishBook: React.FC<BookDetailPageProps> = ({ match }) => {
           user &&
           position && [
             <div key="bookinfo">
-              <IonText color="tertiary">
+              <IonText color="primary">
                 <p className="bookTitle">{book.title}</p>
               </IonText>
               <div className="card">

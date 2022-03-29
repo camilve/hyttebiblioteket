@@ -42,6 +42,7 @@ ion-item.item-has-focus > ion-label {
 .homeContainer {
   padding: 1rem;
   margin-bottom: 2rem;
+  color: var(--ion-text-color);
 }
 
 .homecontent {
@@ -62,7 +63,7 @@ ion-item.item-has-focus > ion-label {
 
 #profileRounding {
   border-radius: 50%;
-  background-color: #f5f5f5;
+  background-color: var(--ion-background-color);
   width: 5.5rem;
   height: 5.5rem;
   display: flex;
@@ -70,9 +71,10 @@ ion-item.item-has-focus > ion-label {
   align-items: center;
   font-size: 1.2rem;
   font-weight: bold;
-  border-color: #ffffff;
+  border-color: var(--ion-card-background);
   border-width: 0.3rem;
   border-style: solid;
+  color: var(--ion-text-color);
 }
 
 #profilerounddiv {

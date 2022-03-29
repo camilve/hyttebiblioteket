@@ -10,7 +10,7 @@
 .infoText {
   font-size: 13px !important;
   white-space: normal;
-  color: #000 !important;
+  color: var(--ion-text-color) !important;
 }
 
 #toggleBorder {
@@ -24,13 +24,13 @@
 }
 
 .whitebackgroundcontent {
-  background-color: white;
+  background-color: var(--ion-card-background);
   margin: 0 -1rem 0rem -1rem;
   padding: 1rem 1rem 1rem 1rem;
 }
 
 .whitebackgroundcontent .item {
-  --background: white;
+  --background: var(--ion-card-background);
 }
 
 .lastInput {

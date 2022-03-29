@@ -53,7 +53,7 @@ const Borrowed: React.FC = () => {
         <IonRefresherContent></IonRefresherContent>
       </IonRefresher>
       {!booksLoading && (
-        <IonList>
+        <>
           {!booksLoading && [
             borrowedBooks.length === 0 && (
               <IonItem key="noAvailable">
@@ -85,7 +85,7 @@ const Borrowed: React.FC = () => {
               </IonCard>
             )),
           ]}
-        </IonList>
+        </>
       )}
       {(booksLoading || loading) && (
         <IonList>

@@ -154,7 +154,7 @@ const Books: React.FC = () => {
               books.length === 0 && (
                 <IonItem key="noAvailable">
                   <IonLabel class="ion-text-wrap">
-                    Ingen tilgjengelige
+                    Ingen bøker tilgjengelig
                     <p>{`${
                       !position
                         ? "Du må tillate posisjon for å finne bøker."
@@ -218,7 +218,7 @@ const Books: React.FC = () => {
             <IonList key="noPosition">
               <IonItem key="noAvailable">
                 <IonLabel class="ion-text-wrap">
-                  Ingen tilgjengelige
+                  Ingen bøker tilgjengelig
                   <p>{`${
                     !position ? "Du må tillate posisjon for å finne bøker." : ""
                   }`}</p>

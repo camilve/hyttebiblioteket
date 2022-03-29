@@ -43,21 +43,10 @@ const MyBooks: React.FC = () => {
   return (
     <IonContent fullscreen>
       {!booksLoading && [
-        /* <IonItem
-          key="add"
-          button
-          detail
-          onClick={() => history.push(`/my-books/add`)}
-        >
-          <IonLabel color="tertiary" className="addBtn">
-            <IonIcon slot="start" icon={add} />
-            Legg ut bok
-          </IonLabel>
-        </IonItem>, */
         books.length === 0 && (
           <IonItem key="noAvailable">
             <IonLabel class="ion-text-wrap">
-              Du har ingen bøker som ligger ute.
+              Du har ikke lagt ut noen bøker enda.
             </IonLabel>
           </IonItem>
         ),
