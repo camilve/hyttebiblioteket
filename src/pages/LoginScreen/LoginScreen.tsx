@@ -10,7 +10,11 @@ import {
   IonIcon,
   IonText,
   IonToast,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
 } from "@ionic/react";
+import { close } from "ionicons/icons";
 import logo from "../../images/logo.svg";
 import "./LoginScreen.css";
 import HowTo from "../../components/how-to";
@@ -60,21 +64,23 @@ const LoginScreen: React.FC = () => {
 
   return (
     <IonPage>
+      <IonHeader collapse="fade" id="headerModal">
+        <IonToolbar mode="md" id="navbar">
+          <IonButtons slot="end">
+            <IonButton onClick={() => history.goBack()}>
+              <IonIcon icon={close} />
+            </IonButton>
+          </IonButtons>
+        </IonToolbar>
+      </IonHeader>
       <IonContent fullscreen>
         <div className="containerLogin">
-          <div className="logoContainer">
-            <IonIcon src={logo} className="logo" />
+          <div className="centerLogo">
+            <div className="logoContainer">
+              <IonIcon src={logo} className="logo" />
+            </div>
           </div>
           <IonCard className="logincard">
-            <IonButton
-              color="secondary"
-              fill="solid"
-              className="btn"
-              onClick={() => history.push("/register")}
-            >
-              Registrer
-            </IonButton>
-            <p className="orLoginText">Eller logg inn</p>
             <IonItem>
               <IonLabel position="floating" className="label">
                 E-post

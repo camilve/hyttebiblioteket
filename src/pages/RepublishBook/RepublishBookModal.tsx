@@ -101,6 +101,7 @@ const RepublishBookModal: React.FC<BookDetailPageProps> = ({
               bookDB
                 .updateBook(book.id, values)
                 .then(() => {
+                  closemodal();
                   history.push("/my-books");
                 })
                 .catch((e) => console.error(e));

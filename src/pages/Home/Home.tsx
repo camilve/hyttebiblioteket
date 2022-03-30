@@ -12,13 +12,16 @@ import {
   IonIcon,
   IonItem,
   IonLabel,
+  IonText,
   IonTitle,
 } from "@ionic/react";
 import {
   close,
-  informationCircle,
+  informationCircleOutline,
   logOutOutline,
   person,
+  chatboxOutline,
+  documentTextOutline,
 } from "ionicons/icons";
 import { UserType } from "../../types/generalTypes";
 import "./Home.css";
@@ -30,6 +33,7 @@ const Tab3: React.FC = () => {
   const [user] = useAuthState(auth);
   const [userInfo, setUserInfo] = useState<UserType | undefined>(undefined);
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const [openFeedbackModal, setOpenFeedbackModal] = useState<boolean>(false);
 
   const fetchUser = async () => {
     if (user && !userInfo) {
@@ -65,8 +69,28 @@ const Tab3: React.FC = () => {
         </div>
         <IonCard className="homecard" button onClick={() => setOpenModal(true)}>
           <IonItem className="homecarditem">
-            <IonIcon icon={informationCircle} color="primary" slot="start" />
+            <IonIcon
+              icon={informationCircleOutline}
+              color="primary"
+              slot="start"
+            />
             <IonLabel>Om</IonLabel>
+          </IonItem>
+        </IonCard>
+        <IonCard className="homecard" button>
+          <IonItem className="homecarditem">
+            <IonIcon icon={documentTextOutline} color="primary" slot="start" />
+            <IonLabel>Vilkår og betingelser</IonLabel>
+          </IonItem>
+        </IonCard>
+        <IonCard
+          className="homecard"
+          button
+          onClick={() => setOpenFeedbackModal(true)}
+        >
+          <IonItem className="homecarditem">
+            <IonIcon icon={chatboxOutline} color="primary" slot="start" />
+            <IonLabel>Gi tilbakemelding</IonLabel>
           </IonItem>
         </IonCard>
         <IonCard button onClick={() => logout()} className="homecard">
@@ -95,9 +119,27 @@ const Tab3: React.FC = () => {
             </IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonContent>
-          <HowTo />
-        </IonContent>
+        {/* <IonContent> */}
+        <HowTo />
+        {/* </IonContent> */}
+      </IonModal>
+
+      <IonModal
+        isOpen={openFeedbackModal}
+        //swipeToClose={true}
+        onDidDismiss={() => setOpenFeedbackModal(false)}
+        breakpoints={[0, 0.3]}
+        initialBreakpoint={0.3}
+      >
+        <div id="feedbackContent">
+          <IonText>
+            Send e-post til <i>kontakt.hyttebiblioteket@gmail.com</i> for å gi
+            din tilbakemelding.
+            <br />
+            <br />
+            Tusen takk 😃
+          </IonText>
+        </div>
       </IonModal>
     </IonContent>
   );

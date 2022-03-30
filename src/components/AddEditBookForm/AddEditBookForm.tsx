@@ -51,7 +51,7 @@ const AddEditBookForm = ({
         ownership: book?.ownership || false,
         borrowed: book?.borrowed || false,
         borrowedBy: book?.borrowedBy || "",
-        borrowedDate: book?.borrowedDate,
+        borrowedDate: book?.borrowedDate || "",
       }}
       validationSchema={yup.object().shape({
         title: yup.string().required("Feltet er påkrevd"),

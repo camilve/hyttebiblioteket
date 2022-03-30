@@ -6,7 +6,6 @@ import setSelectedTableReducer from "./services/selectTable.reducer";
 
 const rootReducer = combineReducers({
   selectedTableBooks: setSelectedTableReducer("BOOKS"),
-  selectedTableMyBooks: setSelectedTableReducer("MY_BOOKS"),
 });
 
 export default createStore(
