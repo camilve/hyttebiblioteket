@@ -58,7 +58,11 @@ const RepublishBook: React.FC<BookDetailPageProps> = ({ match }) => {
       setBook(undefined);
       const _books = await bookDB.byId(id);
       if (!_books) {
-        history.push("/my-books");
+        history.push("/borrowed");
+        return;
+      }
+      if (_books.borrowed === false || _books.borrowedBy !== user.uid) {
+        history.push("/borrowed");
         return;
       }
       fetchUser(_books);

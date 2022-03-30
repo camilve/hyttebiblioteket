@@ -6,6 +6,9 @@ import {
   IonText,
   IonItem,
   IonInput,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
 } from "@ionic/react";
 import { close } from "ionicons/icons";
 import "./ForgottenPassword.css";
@@ -24,10 +27,16 @@ export const ForgottenPassword: React.FC<ForgottenPassordProps> = ({
   const [email, setEmail] = useState<string>("");
   return (
     <IonModal isOpen={open}>
+      <IonHeader collapse="fade" id="headerModal">
+        <IonToolbar mode="md" id="navbar">
+          <IonButtons slot="end">
+            <IonButton onClick={() => handleclose()}>
+              <IonIcon icon={close} />
+            </IonButton>
+          </IonButtons>
+        </IonToolbar>
+      </IonHeader>
       <div className="modalContent">
-        <IonButton fill="clear" onClick={() => handleclose()}>
-          <IonIcon icon={close} />
-        </IonButton>
         <IonText>
           <h2 className="title">Glemt passord</h2>
         </IonText>

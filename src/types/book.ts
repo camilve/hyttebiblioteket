@@ -15,7 +15,7 @@ export type BookType = {
   borrowedBy: string;
   ownerId: string;
   userId: string;
-  borrowedDate?: string;
+  borrowedDate: string;
 };
 
 export type KeyBookObjectType = {
@@ -28,7 +28,7 @@ type booklistType = {
 
 export type RouteType = {
   component: React.ComponentType<any>;
-  header: (match: MatchParams) => string;
+  header: string;
   back: boolean;
 };
 

@@ -10,10 +10,13 @@ import {
   IonBackButton,
   IonCard,
   IonIcon,
+  IonHeader,
+  IonToolbar,
 } from "@ionic/react";
 import logo from "../../images/logo.svg";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
+import { close } from "ionicons/icons";
 import Input from "../../components/Input";
 import { registerWithEmailAndPassword } from "../../db/index";
 import "./Registration.css";
@@ -25,11 +28,20 @@ const Registration: React.FC = () => {
   const [errorRegister, setErrorRegister] = useState("");
   return (
     <IonPage>
+      <IonHeader collapse="fade" id="headerModal">
+        <IonToolbar mode="md" id="navbar" color="primary">
+          <IonButtons slot="end">
+            <IonButton onClick={() => history.goBack()}>
+              <IonIcon icon={close} />
+            </IonButton>
+          </IonButtons>
+        </IonToolbar>
+      </IonHeader>
       <IonContent fullscreen>
         <div className="containerRegister">
-          <div className="logoContainer">
+          {/*  <div className="logoContainer">
             <IonIcon src={logo} className="logo" />
-          </div>
+          </div> */}
           <IonCard className="logincard">
             <IonButtons slot="start">
               <IonBackButton defaultHref="/" />

@@ -89,3 +89,10 @@ ion-item.item-has-focus > ion-label {
   border-radius: 1rem;
   font-size: 0.875rem;
 }
+
+#feedbackContent {
+  padding: 2rem;
+  font-size: 0.9rem;
+  -webkit-user-select: text;
+  user-select: text;
+}

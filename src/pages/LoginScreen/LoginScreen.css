@@ -22,13 +22,6 @@ ion-item.item-has-focus > ion-label {
   margin-bottom: 1rem;
 }
 
-.orLoginText {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  font-size: 0.875rem !important;
-  color: #8c8c8c;
-}
-
 .containerLogin {
   text-align: center;
   position: relative;
@@ -37,7 +30,7 @@ ion-item.item-has-focus > ion-label {
   right: 0;
   top: 0;
   /* transform: translateY(-50%); */
-  background-color: var(--ion-color-primary, #52796f);
+  background-color: var(--ion-background-color);
   height: 100%;
 }
 
@@ -50,13 +43,28 @@ ion-item.item-has-focus > ion-label {
 
 .logo {
   color: white;
-  height: 5.5rem;
-  width: 4.125rem;
+  /* height: 5.5rem; */
+  /* width: 4.125rem; */
+  width: 100%;
+  height: 100%;
   float: left;
 }
 
 .logoContainer {
   display: flex;
+  background: var(--ion-color-primary);
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  width: 8rem;
+  height: 8rem;
+}
+
+.centerLogo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
 }
 
 #caption {

@@ -9,14 +9,12 @@ import {
   isPlatform,
   IonIcon,
 } from "@ionic/react";
-import logo from "../../images/logo.svg";
 import "./Header.css";
 import { arrowBackSharp, chevronBack } from "ionicons/icons";
-import { MatchParams } from "../../types/book";
 import { useRouteMatch, useHistory } from "react-router-dom";
 
 type HeaderProps = {
-  title: (match: MatchParams) => string;
+  title: string;
   back?: boolean;
   loading?: boolean;
 };
@@ -54,7 +52,7 @@ const Header: React.FC<HeaderProps> = ({
             {loading ? (
               <IonSkeletonText className="headerTitleSkeleton" />
             ) : (
-              <p style={{ display: "inline" }}>{title(match.params)}</p>
+              <p style={{ display: "inline" }}>{title}</p>
             )}
           </div>
         </IonTitle>

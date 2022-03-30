@@ -120,6 +120,10 @@ const Map = ({
         center={center || position || pos}
         zoom={zoom}
         zoomControl={false}
+        maxBounds={[
+          [-85, -180.0],
+          [85, 180.0],
+        ]}
       >
         {clickable && <MyComponent />}
         <ZoomTracker />
@@ -127,6 +131,7 @@ const Map = ({
         <TileLayer
           attribution="&copy; <a href='http://osm.org/copyright'>OpenStreetMap</a> contributors"
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          noWrap
         />
         {position && (
           <Marker

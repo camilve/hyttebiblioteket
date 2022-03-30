@@ -62,16 +62,16 @@ setupIonicReact();
 
 const PrivateRoutes = () => (
   <IonReactRouter>
-    <IonTabs>
-      <IonRouterOutlet>
-        <Route path="/login" component={LoginScreen} exact />
-        <Route path="/register" component={RegistrationScreen} exact />
-        <Route path="/about" component={AboutScreen} exact />
-        <Route>
-          <Redirect to="/login" />
-        </Route>
-      </IonRouterOutlet>
-      <IonTabBar slot="bottom">
+    {/*  <IonTabs> */}
+    <IonRouterOutlet>
+      <Route path="/login" component={LoginScreen} exact />
+      <Route path="/register" component={RegistrationScreen} exact />
+      <Route path="/about" component={AboutScreen} exact />
+      <Route>
+        <Redirect to="/about" />
+      </Route>
+    </IonRouterOutlet>
+    {/*   <IonTabBar slot="bottom">
         <IonTabButton tab="login" href="/login">
           <IonIcon icon={logIn} />
           <IonLabel>Logg inn</IonLabel>
@@ -85,54 +85,54 @@ const PrivateRoutes = () => (
           <IonLabel>Om</IonLabel>
         </IonTabButton>
       </IonTabBar>
-    </IonTabs>
+    </IonTabs> */}
   </IonReactRouter>
 );
 
 const routes: BreadCrumbType = {
   "/books": {
     component: Books,
-    header: () => "Finn bok",
+    header: "Finn bok",
     back: false,
   },
   "/books/:id-:title": {
     component: BookScreen,
-    header: () => "" /* (match) => match.title || */,
+    header: "" /* (match) => match.title || */,
     back: true,
   },
   "/borrowed": {
     component: Borrowed,
-    header: () => "Lånte bøker",
+    header: "Lånte bøker",
     back: false,
   },
   "/borrowed/:id": {
     component: RepublishBook,
-    header: () => "Lånt bok",
+    header: "Lånt bok",
     back: true,
   },
   "/my-books": {
     component: MyBooks,
-    header: () => "Mine bøker",
+    header: "Mine bøker",
     back: false,
   },
   "/my-books/add": {
     component: AddBook,
-    header: () => "Legg ut bok",
+    header: "Legg ut bok",
     back: true,
   },
   "/my-books/edit-:id": {
     component: EditBook,
-    header: () => "Rediger bok",
+    header: "Rediger bok",
     back: true,
   },
   "/my-books/:page?": {
     component: MyBooks,
-    header: () => "Mine bøker",
+    header: "Mine bøker",
     back: false,
   },
   "/home": {
     component: Home,
-    header: () => "Hyttebiblioteket",
+    header: "Hyttebiblioteket",
     back: false,
   },
 };
@@ -152,7 +152,7 @@ const PublicRoutes = () => (
                     exact
                     component={() => (
                       <Header
-                        title={(params) => routes[path].header(params)}
+                        title={routes[path].header}
                         key="header"
                         back={routes[path].back || false}
                       />
@@ -171,7 +171,7 @@ const PublicRoutes = () => (
                 component={routes[path].component}
               />
             ))}
-            <Redirect to="/home" />
+            <Redirect to="/books" />
           </Switch>
         </IonPage>
       </IonRouterOutlet>
