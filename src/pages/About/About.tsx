@@ -21,11 +21,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSelectedTable } from "../../services/selectTable.actions";
 import { Pagination } from "swiper";
 
-const slideOpts = {
-  initialSlide: 0,
-  speed: 400,
-};
-
 const About: React.FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -34,16 +29,6 @@ const About: React.FC = () => {
 
   return (
     <IonPage>
-      {/*   <IonContent fullscreen>
-      <div className="containerHeaderAbout">
-        <div className="logoContainer">
-          <IonIcon src={logo} className="logo" />
-        </div>
-      </div>
-      <div className="howtocontainer">
-        <HowTo />
-      </div>
-    </IonContent> */}
       <IonContent class="ion-padding">
         <Swiper
           modules={[Pagination]}

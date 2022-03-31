@@ -90,6 +90,7 @@ const EditBook: React.FC = () => {
         {book &&
           user && [
             <AddEditBookForm
+              key="form"
               edit
               borrowed={book.borrowed && book.borrowedBy !== user.uid}
               book={book}

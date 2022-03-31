@@ -18,8 +18,6 @@ import { getLocationErrorMessage } from "../../help-functions/error";
 import { getDistanceFromLatLonInKm } from "../../help-functions/distance";
 import { Geolocation } from "@ionic-native/geolocation";
 import { LocationError } from "../../types/generalTypes";
-import { useDispatch } from "react-redux";
-import { setSelectedTable } from "../../services/selectTable.actions";
 
 interface BookDetailPageProps {
   id: string;
@@ -29,7 +27,6 @@ interface BookDetailPageProps {
 const Book: React.FC = () => {
   const history = useHistory();
   const match = useRouteMatch<BookDetailPageProps>();
-  const dispatch = useDispatch();
   const { id } = match.params;
   const [book, setBook] = useState<BookType | undefined>(undefined);
   const [bookLoading, setBookLoading] = useState(false);
