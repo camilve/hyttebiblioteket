@@ -12,16 +12,16 @@
   margin-top: -2rem;
 }
 
-ion-slides {
-  height: 80%;
+.swiper {
+  height: 75%;
 }
 
 .slidecontent {
   padding: 2rem;
 }
 
-.swiper-slide {
-  padding-bottom: 4rem;
+.slide {
+  height: 100%;
 }
 
 .swiper-slide h2 {
@@ -29,10 +29,10 @@ ion-slides {
 }
 
 .swiper-slide img {
-  max-height: 40%;
-  max-width: 80%;
-  margin: 3rem 0 2rem;
-  pointer-events: none;
+  max-height: 50% !important;
+  max-width: 80% !important;
+  margin: 3rem 0 2rem !important;
+  pointer-events: none !important;
 }
 
 .swiper-slide p {
@@ -44,7 +44,7 @@ ion-slides {
 
 .regBtn {
   --border-radius: 2rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
   width: 100%;
   margin-bottom: 1rem;
   text-transform: none;

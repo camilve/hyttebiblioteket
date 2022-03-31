@@ -7,18 +7,17 @@ import { UserType } from "../../types/generalTypes";
 import AddEditBookForm from "../../components/AddEditBookForm";
 import { auth } from "../../db/index";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useHistory, RouteComponentProps } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import { IonContent, IonSkeletonText, IonButton, IonAlert } from "@ionic/react";
-import { trash } from "ionicons/icons";
 import "./EditBook.css";
 
-interface BookDetailPageProps
-  extends RouteComponentProps<{
-    id: string;
-  }> {}
+interface BookDetailPageProps {
+  id: string;
+}
 
-const EditBook: React.FC<BookDetailPageProps> = ({ match }) => {
+const EditBook: React.FC = () => {
   const history = useHistory();
+  const match = useRouteMatch<BookDetailPageProps>();
   const { id } = match.params;
   const [book, setBook] = useState<BookType | undefined>(undefined);
   const [bookLoading, setBookLoading] = useState(false);

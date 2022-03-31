@@ -6,37 +6,26 @@ import { BookType } from "../../types/book";
 import { UserType } from "../../types/generalTypes";
 import { auth } from "../../db/index";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useHistory, RouteComponentProps } from "react-router-dom";
-import { Formik, Form } from "formik";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import Map from "../../components/Map";
-import { GeoPoint } from "firebase/firestore";
-import { geohashForLocation } from "geofire-common";
 import Modal from "./RepublishBookModal";
 import {
   IonContent,
   IonButton,
-  IonIcon,
   IonAlert,
   IonText,
-  IonInput,
-  IonItem,
-  IonLabel,
-  IonToggle,
   IonSkeletonText,
-  IonTextarea,
 } from "@ionic/react";
 import { Geolocation } from "@ionic-native/geolocation";
-import { trash, checkmark } from "ionicons/icons";
 import "./RepublishBook.css";
-import * as yup from "yup";
 
-interface BookDetailPageProps
-  extends RouteComponentProps<{
-    id: string;
-  }> {}
+interface BookDetailPageProps {
+  id: string;
+}
 
-const RepublishBook: React.FC<BookDetailPageProps> = ({ match }) => {
+const RepublishBook: React.FC = () => {
   const history = useHistory();
+  const match = useRouteMatch<BookDetailPageProps>();
   const { id } = match.params;
   const [book, setBook] = useState<BookType | undefined>(undefined);
   const [bookLoading, setBookLoading] = useState<boolean>(false);

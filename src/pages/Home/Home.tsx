@@ -28,9 +28,12 @@ import "./Home.css";
 import HowTo from "../../components/how-to";
 import { logout, auth } from "../../db/index";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useDispatch } from "react-redux";
+import { setSelectedTable } from "../../services/selectTable.actions";
 
 const Tab3: React.FC = () => {
   const [user] = useAuthState(auth);
+  const dispatch = useDispatch();
   const [userInfo, setUserInfo] = useState<UserType | undefined>(undefined);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [openFeedbackModal, setOpenFeedbackModal] = useState<boolean>(false);
@@ -93,7 +96,14 @@ const Tab3: React.FC = () => {
             <IonLabel>Gi tilbakemelding</IonLabel>
           </IonItem>
         </IonCard>
-        <IonCard button onClick={() => logout()} className="homecard">
+        <IonCard
+          button
+          onClick={() => {
+            dispatch(setSelectedTable("ABOUT", "0"));
+            logout();
+          }}
+          className="homecard"
+        >
           <IonItem className="homecarditem">
             <IonIcon icon={logOutOutline} color="primary" slot="start" />
             <IonLabel>Logg ut</IonLabel>

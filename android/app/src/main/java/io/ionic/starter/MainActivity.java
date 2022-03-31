@@ -13,7 +13,7 @@ import com.getcapacitor.Plugin;
 import java.util.ArrayList;
 
 public class MainActivity extends BridgeActivity {
-    void setDarkMode() {
+   void setDarkMode() {
         // Android "fix" for enabling dark mode
         // @see: https://github.com/ionic-team/capacitor/discussions/1978
         int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
@@ -45,14 +45,4 @@ public class MainActivity extends BridgeActivity {
         setDarkMode();
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // Initializes the Bridge
-        this.init(savedInstanceState, new ArrayList<Class<? extends Plugin>>() {{
-            // Additional plugins you've installed go here
-            // Ex: add(TotallyAwesomePlugin.class);
-        }});
-    }
 }

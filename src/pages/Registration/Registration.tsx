@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import {
   IonPage,
-  IonItem,
   IonContent,
-  IonInput,
   IonText,
   IonButton,
   IonButtons,
@@ -13,7 +11,6 @@ import {
   IonHeader,
   IonToolbar,
 } from "@ionic/react";
-import logo from "../../images/logo.svg";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
 import { close } from "ionicons/icons";
@@ -39,9 +36,6 @@ const Registration: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen>
         <div className="containerRegister">
-          {/*  <div className="logoContainer">
-            <IonIcon src={logo} className="logo" />
-          </div> */}
           <IonCard className="logincard">
             <IonButtons slot="start">
               <IonBackButton defaultHref="/" />

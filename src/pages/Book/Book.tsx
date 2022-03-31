@@ -5,10 +5,9 @@ import {
   IonToast,
   IonSkeletonText,
   IonButton,
-  IonCard,
 } from "@ionic/react";
 import L, { LatLng } from "leaflet";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import * as bookDB from "../../db/repositories/books";
 import { auth } from "../../db/index";
@@ -18,21 +17,18 @@ import Map from "../../components/Map";
 import { getLocationErrorMessage } from "../../help-functions/error";
 import { getDistanceFromLatLonInKm } from "../../help-functions/distance";
 import { Geolocation } from "@ionic-native/geolocation";
-import { RouteComponentProps } from "react-router-dom";
 import { LocationError } from "../../types/generalTypes";
 import { useDispatch } from "react-redux";
 import { setSelectedTable } from "../../services/selectTable.actions";
 
-interface BookDetailPageProps
-  extends RouteComponentProps<{
-    id: string;
-    title: string;
-  }> {
-  back: boolean;
+interface BookDetailPageProps {
+  id: string;
+  title: string;
 }
 
-const Book: React.FC<BookDetailPageProps> = ({ match }) => {
+const Book: React.FC = () => {
   const history = useHistory();
+  const match = useRouteMatch<BookDetailPageProps>();
   const dispatch = useDispatch();
   const { id } = match.params;
   const [book, setBook] = useState<BookType | undefined>(undefined);
@@ -162,8 +158,7 @@ const Book: React.FC<BookDetailPageProps> = ({ match }) => {
                   bookDB
                     .updateBook(id, newBook)
                     .then(() => {
-                      dispatch(setSelectedTable("MY_BOOKS", "1"));
-                      history.push("/my-books");
+                      history.push("/borrowed");
                     })
                     .catch((e) => console.error(e));
                 }}

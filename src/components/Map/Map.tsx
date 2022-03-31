@@ -56,7 +56,7 @@ const Map = ({
 
   useEffect(() => {
     sortBooksInMap(zoom);
-  }, []);
+  }, [zoom]);
 
   function MyComponent() {
     useMapEvents({
@@ -110,6 +110,7 @@ const Map = ({
             ) >= distance
         );
       }
+      return book;
     });
     setBookList(list);
   }

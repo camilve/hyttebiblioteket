@@ -10,7 +10,6 @@ import {
   IonIcon,
   IonFab,
   IonButton,
-  IonFabButton,
 } from "@ionic/react";
 import { add } from "ionicons/icons";
 import "./MyBooks.css";
@@ -64,7 +63,7 @@ const MyBooks: React.FC = () => {
             </div>
           </IonCard>
         )),
-        <IonFab vertical="bottom" slot="fixed">
+        <IonFab vertical="bottom" slot="fixed" key="fabbtn">
           <IonButton
             id="fabbutton"
             onClick={() => history.push(`/my-books/add`)}

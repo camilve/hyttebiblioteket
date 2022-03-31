@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import {
   IonApp,
@@ -12,17 +12,8 @@ import {
   IonLoading,
   IonPage,
 } from "@ionic/react";
-import { onAuthStateChanged } from "firebase/auth";
 import { IonReactRouter } from "@ionic/react-router";
-import {
-  home,
-  library,
-  addCircle,
-  logIn,
-  personAdd,
-  informationCircle,
-  location,
-} from "ionicons/icons";
+import { home, library, addCircle, location } from "ionicons/icons";
 import MyBooks from "./pages/MyBooks";
 import Books from "./pages/Books";
 import Borrowed from "./pages/Borrowed";
@@ -64,28 +55,15 @@ const PrivateRoutes = () => (
   <IonReactRouter>
     {/*  <IonTabs> */}
     <IonRouterOutlet>
-      <Route path="/login" component={LoginScreen} exact />
-      <Route path="/register" component={RegistrationScreen} exact />
-      <Route path="/about" component={AboutScreen} exact />
-      <Route>
-        <Redirect to="/about" />
-      </Route>
+      <Switch>
+        <Route path="/login" component={LoginScreen} exact />
+        <Route path="/register" component={RegistrationScreen} exact />
+        <Route path="/about" component={AboutScreen} exact />
+        <Route>
+          <Redirect to="/about" />
+        </Route>
+      </Switch>
     </IonRouterOutlet>
-    {/*   <IonTabBar slot="bottom">
-        <IonTabButton tab="login" href="/login">
-          <IonIcon icon={logIn} />
-          <IonLabel>Logg inn</IonLabel>
-        </IonTabButton>
-        <IonTabButton tab="register" href="/register">
-          <IonIcon icon={personAdd} />
-          <IonLabel>Registrer</IonLabel>
-        </IonTabButton>
-        <IonTabButton tab="about" href="/about">
-          <IonIcon icon={informationCircle} />
-          <IonLabel>Om</IonLabel>
-        </IonTabButton>
-      </IonTabBar>
-    </IonTabs> */}
   </IonReactRouter>
 );
 
@@ -97,7 +75,7 @@ const routes: BreadCrumbType = {
   },
   "/books/:id-:title": {
     component: BookScreen,
-    header: "" /* (match) => match.title || */,
+    header: "",
     back: true,
   },
   "/borrowed": {
@@ -141,39 +119,29 @@ const PublicRoutes = () => (
   <IonReactRouter>
     <IonTabs>
       <IonRouterOutlet>
-        <IonPage>
-          <Switch>
-            {Object.keys(routes).map((path) => {
-              if (path !== "/home") {
-                return (
-                  <Route
-                    key={path}
-                    path={path}
-                    exact
-                    component={() => (
-                      <Header
-                        title={routes[path].header}
-                        key="header"
-                        back={routes[path].back || false}
-                      />
-                    )}
-                  />
-                );
-              }
-            })}
-          </Switch>
-          <Switch>
-            {Object.keys(routes).map((path) => (
-              <Route
-                key={path}
-                path={path}
-                exact
-                component={routes[path].component}
-              />
-            ))}
-            <Redirect to="/books" />
-          </Switch>
-        </IonPage>
+        <Switch>
+          {Object.keys(routes).map((path) => (
+            <Route
+              key={path}
+              path={path}
+              exact
+              component={() => (
+                <IonPage>
+                  {path !== "/home" && (
+                    <Header
+                      title={routes[path].header}
+                      key="header"
+                      back={routes[path].back || false}
+                    />
+                  )}
+                  {React.createElement(routes[path].component, {})}
+                </IonPage>
+              )}
+            />
+          ))}
+          <Redirect to="/books" />
+        </Switch>
+        {/* </IonPage> */}
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="books" href="/books">
@@ -199,15 +167,8 @@ const PublicRoutes = () => (
 
 const App: React.FC = () => {
   const [u, loading] = useAuthState(auth);
-  const [user, setUser] = useState<null | any>(null);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
-      setUser(currentuser);
-    });
-
-    return unsubscribe;
-  }, [user]);
+  useEffect(() => {}, [u, loading]);
 
   return loading ? (
     <IonApp>

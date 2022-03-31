@@ -17,7 +17,6 @@ import {
 import { close } from "ionicons/icons";
 import logo from "../../images/logo.svg";
 import "./LoginScreen.css";
-import HowTo from "../../components/how-to";
 import { signInEmailAndPassword, sendPasswordReset } from "../../db/index";
 import { useHistory } from "react-router-dom";
 import ForgottenPassword from "../../components/ForgottenPassword";
