@@ -16,7 +16,7 @@ import "./Book.css";
 import Map from "../../components/Map";
 import { getLocationErrorMessage } from "../../help-functions/error";
 import { getDistanceFromLatLonInKm } from "../../help-functions/distance";
-import { Geolocation } from "@ionic-native/geolocation";
+import { Geolocation } from "@capacitor/geolocation";
 import { LocationError } from "../../types/generalTypes";
 
 interface BookDetailPageProps {

@@ -6,7 +6,7 @@ import { auth } from "../../db/index";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useHistory } from "react-router-dom";
 import { IonContent, IonSkeletonText } from "@ionic/react";
-import { Geolocation } from "@ionic-native/geolocation";
+import { Geolocation } from "@capacitor/geolocation";
 
 const AddBook: React.FC = () => {
   const history = useHistory();

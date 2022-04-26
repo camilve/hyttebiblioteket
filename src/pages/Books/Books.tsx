@@ -24,7 +24,7 @@ import { LocationError } from "../../types/generalTypes";
 import "./Books.css";
 import { getLocationErrorMessage } from "../../help-functions/error";
 import { getDistanceFromLatLonInKm } from "../../help-functions/distance";
-import { Geolocation } from "@ionic-native/geolocation";
+import { Geolocation } from "@capacitor/geolocation";
 import Map from "../../components/Map";
 import { RefresherEventDetail } from "@ionic/core";
 import { useDispatch, useSelector } from "react-redux";
@@ -66,7 +66,9 @@ const Books: React.FC = () => {
   const getLocation = async () => {
     setPosLoading(true);
     try {
-      const pos = await Geolocation.getCurrentPosition();
+      const pos = await Geolocation.getCurrentPosition({
+        enableHighAccuracy: true,
+      });
       if (pos) {
         const pos1: LatLng = L.latLng(
           pos.coords.latitude,
@@ -74,6 +76,7 @@ const Books: React.FC = () => {
         );
         setPosition(pos1);
         fetchBooks(pos1, distance);
+        console.log(pos);
       }
       setPosLoading(false);
     } catch (e: any) {

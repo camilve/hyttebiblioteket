@@ -16,7 +16,7 @@ import {
   IonText,
   IonSkeletonText,
 } from "@ionic/react";
-import { Geolocation } from "@ionic-native/geolocation";
+import { Geolocation } from "@capacitor/geolocation";
 import "./RepublishBook.css";
 
 interface BookDetailPageProps {
