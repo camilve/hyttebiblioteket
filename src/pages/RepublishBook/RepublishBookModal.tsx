@@ -205,7 +205,7 @@ const RepublishBookModal: React.FC<BookDetailPageProps> = ({
                     expand="block"
                     type="submit"
                     color="primary"
-                    className="btn"
+                    className="btnModalAdd"
                   >
                     Legg ut
                   </IonButton>

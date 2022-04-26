@@ -55,3 +55,9 @@
 #headerModal::after {
   background-image: none;
 }
+
+.btnModalAdd {
+  text-transform: none;
+  width: 100%;
+  margin-bottom: 1rem;
+}
