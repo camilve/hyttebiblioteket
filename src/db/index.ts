@@ -5,7 +5,10 @@ import {
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
   updateProfile,
+  initializeAuth,
+  indexedDBLocalPersistence,
 } from "firebase/auth";
+import { Capacitor } from "@capacitor/core";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 
 // config value from add firebase sdk script that showed earlier.
@@ -21,6 +24,11 @@ const config = {
 
 // init app
 const app = initializeApp(config);
+if (Capacitor.isNativePlatform()) {
+  initializeAuth(app, {
+    persistence: indexedDBLocalPersistence
+  });
+}
 const auth = getAuth(app);
 const db = getFirestore(app);
 
