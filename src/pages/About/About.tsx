@@ -52,24 +52,27 @@ const About: React.FC = () => {
             <div className="slide">
               <img src={scrollImg} alt="Find books" />
               <h2>2. Finn bok</h2>
-              <p>Bla igjennom bøker i nærområdet ditt.</p>
+              <p>
+                Bla igjennom bøker i nærområdet ditt. Finner du en bok du ønsker
+                å lese? Registrer at du låner boka.
+              </p>
             </div>
           </SwiperSlide>
           <SwiperSlide>
             <div className="slide">
               <img src={getImg} alt="Collect book" />
               <h2>3. Hent bok</h2>
-              <p>
-                Finner du noe du vil lese? Ta turen ut, og registrer at du har
-                hentet boka.
-              </p>
+              <p>Ta turen ut for å finne boka du har lånt.</p>
             </div>
           </SwiperSlide>
           <SwiperSlide>
             <div className="slide">
               <img src={giveImg} alt="Collect book" />
               <h2>4. Legg ut bok</h2>
-              <p>Legg ut bøker du ønsker å dele med andre.</p>
+              <p>
+                Legg ut bøker du ønsker å dele med andre, eller legg ut lånte
+                bøker på nytt.
+              </p>
             </div>
           </SwiperSlide>
         </Swiper>

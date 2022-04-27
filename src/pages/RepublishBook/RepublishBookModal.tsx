@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as bookDB from "../../db/repositories/books";
-import { LatLng } from "leaflet";
+import L, { LatLng } from "leaflet";
 import { BookType } from "../../types/book";
 import { auth } from "../../db/index";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -21,6 +21,7 @@ import {
   IonToolbar,
   IonButtons,
   IonIcon,
+  IonSkeletonText,
   IonTitle,
 } from "@ionic/react";
 import { close } from "ionicons/icons";

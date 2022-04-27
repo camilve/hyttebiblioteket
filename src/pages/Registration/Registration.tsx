@@ -15,6 +15,7 @@ import { Formik, Form } from "formik";
 import * as yup from "yup";
 import { close } from "ionicons/icons";
 import Input from "../../components/Input";
+import TermsModal from "../../components/TermsModal";
 import { registerWithEmailAndPassword } from "../../db/index";
 import "./Registration.css";
 import { getErrorMessage } from "../../help-functions/error";
@@ -23,6 +24,7 @@ import { useHistory } from "react-router-dom";
 const Registration: React.FC = () => {
   const history = useHistory();
   const [errorRegister, setErrorRegister] = useState("");
+  const [openTermDialog, setOpenTermDialog] = useState<boolean>(false);
   return (
     <IonPage>
       <IonHeader collapse="fade" id="headerModal">
@@ -168,11 +170,22 @@ const Registration: React.FC = () => {
                       {errorRegister}
                     </p>
                   </IonText>
+                  <IonText>
+                    Ved å fortsette bekrefter du at du har lest og godtar
+                    Hyttebibliotekets{" "}
+                    <b
+                      style={{ textDecoration: "underline" }}
+                      onClick={() => setOpenTermDialog(true)}
+                    >
+                      vilkår og betingelser
+                    </b>
+                  </IonText>
                 </Form>
               )}
             </Formik>
           </IonCard>
         </div>
+        <TermsModal open={openTermDialog} setOpen={setOpenTermDialog} />
       </IonContent>
     </IonPage>
   );

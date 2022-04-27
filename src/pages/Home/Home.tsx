@@ -22,21 +22,32 @@ import {
   person,
   chatboxOutline,
   documentTextOutline,
+  bugOutline,
 } from "ionicons/icons";
 import { UserType } from "../../types/generalTypes";
 import "./Home.css";
 import HowTo from "../../components/how-to";
+import TermsModal from "../../components/TermsModal";
 import { logout, auth } from "../../db/index";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useDispatch } from "react-redux";
 import { setSelectedTable } from "../../services/selectTable.actions";
+
+interface FeedbackProps {
+  open: boolean;
+  text: string;
+}
 
 const Tab3: React.FC = () => {
   const [user] = useAuthState(auth);
   const dispatch = useDispatch();
   const [userInfo, setUserInfo] = useState<UserType | undefined>(undefined);
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [openFeedbackModal, setOpenFeedbackModal] = useState<boolean>(false);
+  const [openFeedbackModal, setOpenFeedbackModal] = useState<FeedbackProps>({
+    open: false,
+    text: "",
+  });
+  const [openTermsModal, setOpenTermsModal] = useState<boolean>(false);
 
   const fetchUser = async () => {
     if (user && !userInfo) {
@@ -80,7 +91,11 @@ const Tab3: React.FC = () => {
             <IonLabel>Om</IonLabel>
           </IonItem>
         </IonCard>
-        <IonCard className="homecard" button>
+        <IonCard
+          className="homecard"
+          button
+          onClick={() => setOpenTermsModal(true)}
+        >
           <IonItem className="homecarditem">
             <IonIcon icon={documentTextOutline} color="primary" slot="start" />
             <IonLabel>Vilkår og betingelser</IonLabel>
@@ -89,11 +104,21 @@ const Tab3: React.FC = () => {
         <IonCard
           className="homecard"
           button
-          onClick={() => setOpenFeedbackModal(true)}
+          onClick={() => setOpenFeedbackModal({ open: true, text: "feedback" })}
         >
           <IonItem className="homecarditem">
             <IonIcon icon={chatboxOutline} color="primary" slot="start" />
             <IonLabel>Gi tilbakemelding</IonLabel>
+          </IonItem>
+        </IonCard>
+        <IonCard
+          className="homecard"
+          button
+          onClick={() => setOpenFeedbackModal({ open: true, text: "error" })}
+        >
+          <IonItem className="homecarditem">
+            <IonIcon icon={bugOutline} color="primary" slot="start" />
+            <IonLabel>Rapporter feil</IonLabel>
           </IonItem>
         </IonCard>
         <IonCard
@@ -135,22 +160,25 @@ const Tab3: React.FC = () => {
       </IonModal>
 
       <IonModal
-        isOpen={openFeedbackModal}
+        isOpen={openFeedbackModal.open}
         //swipeToClose={true}
-        onDidDismiss={() => setOpenFeedbackModal(false)}
+        onDidDismiss={() => setOpenFeedbackModal({ open: false, text: "" })}
         breakpoints={[0, 0.3]}
         initialBreakpoint={0.3}
       >
         <div id="feedbackContent">
           <IonText>
-            Send e-post til <i>kontakt.hyttebiblioteket@gmail.com</i> for å gi
-            din tilbakemelding.
+            Send e-post til <i>kontakt.hyttebiblioteket@gmail.com</i>
+            {openFeedbackModal.text === "error"
+              ? " for å rapportere feilen. Husk å legge ved boktittel og posisjon hvis det gjelder en bok."
+              : " for å gi din tilbakemelding."}
             <br />
             <br />
             Tusen takk 😃
           </IonText>
         </div>
       </IonModal>
+      <TermsModal open={openTermsModal} setOpen={setOpenTermsModal} />
     </IonContent>
   );
 };

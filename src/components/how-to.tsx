@@ -20,22 +20,25 @@ const HowTo = () => {
         <IonCol className="flex">
           <img src={scrollImg} className="img" alt="Find books" />
           <h6 className="howTitle">2. Finn bok</h6>
-          <p className="imgText">Bla igjennom bøker i nærområdet ditt.</p>
+          <p className="imgText">
+            Bla igjennom bøker i nærområdet ditt. Finner du en bok du ønsker å
+            lese? Registrer at du låner boka.
+          </p>
         </IonCol>
       </IonRow>
       <IonRow>
         <IonCol className="flex">
           <img src={getImg} className="img" alt="Collect book" />
           <h6 className="howTitle">3. Hent bok</h6>
-          <p className="imgText">
-            Finner du noe du vil lese? Ta turen ut, og registrer at du har
-            hentet boka.
-          </p>
+          <p className="imgText">Ta turen ut for å finne boka du har lånt.</p>
         </IonCol>
         <IonCol className="flex">
           <img src={giveImg} className="img" alt="Add book" />
           <h6 className="howTitle">4. Legg ut bok</h6>
-          <p className="imgText">Legg ut bøker du ønsker å dele med andre.</p>
+          <p className="imgText">
+            Legg ut bøker du ønsker å dele med andre, eller legg ut lånte bøker
+            på nytt.
+          </p>
         </IonCol>
       </IonRow>
     </IonGrid>

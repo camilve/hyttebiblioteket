@@ -124,7 +124,8 @@ const AddEditBookForm = ({
                 required
                 values={values}
                 disabled={borrowed}
-                className="lastInput"
+                // className="lastInput"
+                type="number"
               />
             </div>
             <br />
