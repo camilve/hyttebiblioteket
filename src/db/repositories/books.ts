@@ -243,6 +243,7 @@ export const updateBook = async (
     borrowedBy: newBook.borrowedBy,
     ownerId: newBook.ownerId,
     borrowedDate: newBook.borrowedDate,
+    prevBorrowedId: newBook.prevBorrowedId,
   });
 
   return batch.commit();

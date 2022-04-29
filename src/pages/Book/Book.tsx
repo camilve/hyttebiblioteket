@@ -146,9 +146,11 @@ const Book: React.FC = () => {
                 className="btn"
                 onClick={() => {
                   const newBook: BookType = book;
+                  newBook.prevBorrowedId = book.borrowedBy;
                   newBook.borrowedBy = user.uid;
                   newBook.borrowed = true;
                   if (!book.ownership) {
+                    newBook.prevBorrowedId = book.ownerId;
                     newBook.ownerId = user.uid;
                   }
                   newBook.borrowedDate = new Date().toString();

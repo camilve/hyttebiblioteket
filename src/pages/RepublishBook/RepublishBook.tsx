@@ -160,6 +160,29 @@ const RepublishBook: React.FC = () => {
               book={book}
               pos={position}
             />,
+            <IonButton
+              onClick={() => {
+                const newBook: BookType = book;
+                newBook.borrowedBy = book.prevBorrowedId || "";
+                newBook.borrowed = false;
+                newBook.borrowedDate = "";
+                if (!book.ownership) {
+                  newBook.ownerId = book.prevBorrowedId || "";
+                  newBook.borrowedBy = "";
+                }
+                bookDB
+                  .updateBook(id, newBook)
+                  .then(() => {
+                    history.push("/borrowed");
+                  })
+                  .catch((e) => console.error(e));
+              }}
+              key="btnRegret"
+              fill="clear"
+              className="deletebtn"
+            >
+              Angre registrering
+            </IonButton>,
             !(book && book.ownership && book.ownerId !== user.uid) && (
               <IonButton
                 onClick={() => setDeleteAlert(true)}
@@ -167,7 +190,7 @@ const RepublishBook: React.FC = () => {
                 fill="clear"
                 className="deletebtn"
               >
-                Slett
+                Slett bok
               </IonButton>
             ),
             <IonAlert

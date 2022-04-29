@@ -97,6 +97,7 @@ const RepublishBookModal: React.FC<BookDetailPageProps> = ({
                 borrowed: false,
                 borrowedBy: book.ownership ? book.borrowedBy : "",
                 borrowedDate: "",
+                prevBorrowedId: "",
               };
               bookDB
                 .updateBook(book.id, values)

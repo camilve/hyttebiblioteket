@@ -51,6 +51,7 @@ const AddEditBookForm = ({
         ownership: book?.ownership || false,
         borrowed: book?.borrowed || false,
         borrowedBy: book?.borrowedBy || "",
+        prevBorrowedId: book?.prevBorrowedId || "",
         borrowedDate: book?.borrowedDate || "",
       }}
       validationSchema={yup.object().shape({
@@ -76,6 +77,7 @@ const AddEditBookForm = ({
           borrowed: val.borrowed,
           borrowedBy: val.borrowedBy,
           borrowedDate: val.borrowedDate,
+          prevBorrowedId: val.prevBorrowedId,
         };
         onSubmit(values);
       }}

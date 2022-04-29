@@ -13,6 +13,7 @@ export type BookType = {
   borrowed: boolean;
   ownership: boolean;
   borrowedBy: string;
+  prevBorrowedId?: string;
   ownerId: string;
   userId: string;
   borrowedDate: string;
