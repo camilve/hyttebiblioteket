@@ -80,7 +80,7 @@ ion-item.item-has-focus > ion-label {
 #profilerounddiv {
   display: flex;
   justify-content: center;
-  padding: 2rem;
+  padding: 3rem 2rem;
 }
 
 #emailText {
