@@ -140,23 +140,25 @@ const Tab3: React.FC = () => {
         swipeToClose={true}
         onDidDismiss={() => setOpenModal(false)}
       >
-        <IonHeader collapse="fade" id="headerModal">
-          <IonToolbar mode="md" id="navbar">
-            <IonButtons slot="end">
-              <IonButton onClick={() => setOpenModal(false)}>
-                <IonIcon icon={close} />
-              </IonButton>
-            </IonButtons>
-            <IonTitle id="headerTitle">
-              <div id="titleContentHeader">
-                <p style={{ display: "inline" }}>Hvordan fungerer det</p>
-              </div>
-            </IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        {/* <IonContent> */}
-        <HowTo />
-        {/* </IonContent> */}
+        <IonContent>
+          <IonHeader collapse="fade" id="headerModal">
+            <IonToolbar mode="md" id="navbar">
+              <IonButtons slot="end">
+                <IonButton onClick={() => setOpenModal(false)}>
+                  <IonIcon icon={close} />
+                </IonButton>
+              </IonButtons>
+              <IonTitle id="headerTitle">
+                <div id="titleContentHeader">
+                  <p style={{ display: "inline" }}>Hvordan fungerer det</p>
+                </div>
+              </IonTitle>
+            </IonToolbar>
+          </IonHeader>
+          {/* <IonContent> */}
+          <HowTo />
+          {/* </IonContent> */}
+        </IonContent>
       </IonModal>
 
       <IonModal
