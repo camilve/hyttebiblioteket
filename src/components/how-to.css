@@ -16,12 +16,14 @@
   margin: 0;
   font-size: 0.875rem;
   text-align: center;
+  color: var(--ion-text-color);
 }
 
 .howTitle {
   font-size: 1.2rem;
   font-weight: 600;
   margin-top: 1rem;
+  color: var(--ion-text-color);
 }
 .flex {
   display: flex;

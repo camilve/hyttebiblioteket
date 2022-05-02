@@ -95,11 +95,11 @@ const RepublishBook: React.FC = () => {
           user &&
           position && [
             <div key="bookinfo">
-              <IonText color="primary">
+              <IonText color="primary" id="textColor">
                 <p className="bookTitle">{book.title}</p>
               </IonText>
               <div className="card">
-                <IonText>
+                <IonText  id="textColor">
                   <p className="bookInfo">
                     <strong>Forfatter:</strong> {book.author}
                   </p>

@@ -17,7 +17,7 @@ const TermsModal: React.FC<TermsProps> = ({ open, setOpen }) => {
       initialBreakpoint={0.6}
     >
       <div id="feedbackContent">
-        <IonText>
+        <IonText id="textColor">
           <p style={{ fontSize: "1rem" }}>1. Ansvarsbegrensning</p>
           Hyttebiblioteket kan ikke holdes ansvarlig for eventuelle tap eller
           skader av bøker.

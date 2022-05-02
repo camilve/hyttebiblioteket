@@ -10,7 +10,7 @@
   margin-bottom: 0.5rem;
 }
 .book-icon {
-  background: #f5f9f2 !important;
+  background: var(--ion-background-color, #f4f5f8) !important;
   box-shadow: 0px 0px 10px black;
   border-radius: 50%;
 }

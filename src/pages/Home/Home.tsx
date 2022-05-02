@@ -167,7 +167,7 @@ const Tab3: React.FC = () => {
         initialBreakpoint={0.3}
       >
         <div id="feedbackContent">
-          <IonText>
+          <IonText id="textColor">
             Send e-post til <i>kontakt.hyttebiblioteket@gmail.com</i>
             {openFeedbackModal.text === "error"
               ? " for å rapportere feilen. Husk å legge ved boktittel og posisjon hvis det gjelder en bok."

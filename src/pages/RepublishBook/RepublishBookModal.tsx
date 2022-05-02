@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as bookDB from "../../db/repositories/books";
-import L, { LatLng } from "leaflet";
+import { LatLng } from "leaflet";
 import { BookType } from "../../types/book";
 import { auth } from "../../db/index";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -21,7 +21,6 @@ import {
   IonToolbar,
   IonButtons,
   IonIcon,
-  IonSkeletonText,
   IonTitle,
 } from "@ionic/react";
 import { close } from "ionicons/icons";
@@ -119,7 +118,7 @@ const RepublishBookModal: React.FC<BookDetailPageProps> = ({
               <Form>
                 <div className="content">
                   <div>
-                    <IonText>
+                    <IonText  id="textColor">
                       <p>{`Tittel: ${book.title}`}</p>
                       <p className="bookInfo">
                         <strong>Forfatter:</strong> {book.author}

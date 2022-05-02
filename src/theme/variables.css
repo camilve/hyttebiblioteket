@@ -189,6 +189,10 @@ body.dark {
   --ion-item-background: #000000;
 
   --ion-card-background: #1c1c1d;
+
+  --ion-toolbar-background: #121212;
+  --ion-tab-bar-background: #121212;
+
 }
 
 .ios body.dark ion-modal {
