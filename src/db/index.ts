@@ -19,14 +19,13 @@ const config = {
   storageBucket: "book-sharing-c7b9b.appspot.com",
   messagingSenderId: "634114595713",
   appId: "1:634114595713:web:f211e402d8774f55eba680",
-  //measurementId: "YOUR_MEASUREMENT_ID",
 };
 
 // init app
 const app = initializeApp(config);
 if (Capacitor.isNativePlatform()) {
   initializeAuth(app, {
-    persistence: indexedDBLocalPersistence
+    persistence: indexedDBLocalPersistence,
   });
 }
 const auth = getAuth(app);

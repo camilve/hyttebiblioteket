@@ -11,7 +11,6 @@ const TermsModal: React.FC<TermsProps> = ({ open, setOpen }) => {
   return (
     <IonModal
       isOpen={open}
-      //swipeToClose={true}
       onDidDismiss={() => setOpen(false)}
       breakpoints={[0, 0.6]}
       initialBreakpoint={0.6}

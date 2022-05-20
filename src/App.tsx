@@ -53,7 +53,6 @@ setupIonicReact();
 
 const PrivateRoutes = () => (
   <IonReactRouter>
-    {/*  <IonTabs> */}
     <IonRouterOutlet>
       <Switch>
         <Route path="/login" component={LoginScreen} exact />
@@ -141,7 +140,6 @@ const PublicRoutes = () => (
           ))}
           <Redirect to="/books" />
         </Switch>
-        {/* </IonPage> */}
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="books" href="/books">

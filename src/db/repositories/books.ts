@@ -113,8 +113,7 @@ export const myBooks = async (userId: string): Promise<Array<BookType>> => {
   try {
     const myBooks = query(
       collection(db, COLLECTION_NAME),
-      where("ownerId", "==", userId) /* 
-      where("borrowedBy", "!=", userId), */,
+      where("ownerId", "==", userId),
       where("borrowed", "==", false)
     );
     const myBooks2 = query(

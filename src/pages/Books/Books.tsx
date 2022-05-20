@@ -194,7 +194,6 @@ const Books: React.FC = () => {
                 </IonCard>
               )),
             ]}
-          {/* </IonList> */}
         </>
       )}
       {selectedTable === "1" &&

@@ -155,15 +155,12 @@ const Tab3: React.FC = () => {
               </IonTitle>
             </IonToolbar>
           </IonHeader>
-          {/* <IonContent> */}
           <HowTo />
-          {/* </IonContent> */}
         </IonContent>
       </IonModal>
 
       <IonModal
         isOpen={openFeedbackModal.open}
-        //swipeToClose={true}
         onDidDismiss={() => setOpenFeedbackModal({ open: false, text: "" })}
         breakpoints={[0, 0.3]}
         initialBreakpoint={0.3}

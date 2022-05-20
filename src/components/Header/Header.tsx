@@ -43,7 +43,6 @@ const Header: React.FC<HeaderProps> = ({
                 icon={isPlatform("ios") ? chevronBack : arrowBackSharp}
               />
             </IonButton>
-            {/* <IonBackButton defaultHref="/" /> */}
           </IonButtons>
         )}
         <IonTitle id="headerTitle">

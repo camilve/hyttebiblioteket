@@ -129,7 +129,6 @@ const LoginScreen: React.FC = () => {
             </IonButton>
           </IonCard>
         </div>
-        {/* <HowTo /> */}
         <ForgottenPassword
           open={forgottenPassword}
           onSubmit={(email: string) => resetPassword(email)}
