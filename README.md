@@ -1,5 +1,5 @@
 # Hyttebiblioteket
 
-Denne mobilapplikasjonen er laget for deling av bøker innen hyttefelt.
+Mobilapplikasjonen laget for deling av bøker innen hyttefelt.
 
 
