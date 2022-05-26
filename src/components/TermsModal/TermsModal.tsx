@@ -12,8 +12,8 @@ const TermsModal: React.FC<TermsProps> = ({ open, setOpen }) => {
     <IonModal
       isOpen={open}
       onDidDismiss={() => setOpen(false)}
-      breakpoints={[0, 0.6]}
-      initialBreakpoint={0.6}
+      breakpoints={[0, 0.7]}
+      initialBreakpoint={0.7}
     >
       <div id="feedbackContent">
         <IonText id="textColor">
@@ -25,6 +25,10 @@ const TermsModal: React.FC<TermsProps> = ({ open, setOpen }) => {
           Vi oppfordrer alle til å bruke en hyggelig tone, samt respektere
           andres bøker og registrere hvis du henter bøker slik at systemet er
           oppdatert over hva som ligger ute.
+          <br />
+          <p style={{ fontSize: "1rem" }}>3. Bruk av personinformasjon</p>
+          Hyttebiblioteket bruker kun epost for å håndtere glemt passord, og
+          rapportering av feil på dine bøker.
           <br />
           <p style={{ fontSize: "1rem" }}>Kontaktdetaljer</p>
           Send henvendelser til email: <i>kontakt.hyttebiblioteket@gmail.com</i>
